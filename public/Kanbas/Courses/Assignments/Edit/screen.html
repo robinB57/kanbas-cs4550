@@ -1,0 +1,179 @@
+<html>
+  <head>
+    <title>Edit Course Assignments</title>
+  </head>
+  <body>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            <ul>
+              <li>
+                <a href="/Kanbas/Account/Navigation/screen.html">Account</a>
+              </li>
+              <li><a href="#">Dashboard</a></li>
+              <li><a href="/Kanbas/Courses/Home/screen.html">Courses</a></li>
+              <li><a href="#">Calendar</a></li>
+              <li><a href="#">Inbox</a></li>
+              <li><a href="#">History</a></li>
+              <li><a href="#">Commons</a></li>
+              <li><a href="#">Studio</a></li>
+              <li><a href="#">Help</a></li>
+            </ul>
+          </td>
+          <td valign="top">
+            <ul>
+              <li><a href="/Kanbas/Courses/Home/screen.html">Home</a></li>
+              <li><a href="#">Modules</a></li>
+              <li><a href="#">Piazza</a></li>
+              <li>
+                <a href="/Kanbas/Courses/Assignments/screen.html"
+                  >Assignments</a
+                >
+              </li>
+              <li><a href="/Kanbas/Courses/Grades/screen.html">Grades</a></li>
+              <li><a href="#">People</a></li>
+              <li><a href="#">Panopto Video</a></li>
+              <li><a href="#">Discussions</a></li>
+              <li><a href="#">Announcements</a></li>
+              <li><a href="#">Pages</a></li>
+              <li><a href="#">Files</a></li>
+              <li><a href="#">Rubrics</a></li>
+              <li><a href="#">Syllabus</a></li>
+              <li><a href="#">Settings</a></li>
+            </ul>
+          </td>
+          <td valign="top">
+            <b>Assignment Name</b>
+            <br />
+            <input
+              type="text"
+              name="wd-assignment-name"
+              value="Placeholder Assignment"
+            />
+            <br />
+            <br />
+            <textarea name="wd-assignment-description" rows="4" cols="50">
+This is a placeholder description for this assignment. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa ipsum laudantium veniam optio, dicta quas voluptas facilis alias laborum voluptatibus maiores ducimus dolorem molestiae labore, harum rerum? Quis, quam vitae!
+</textarea
+            >
+            <br />
+            <br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><label>Points</label></td>
+                  <td><input type="number" value="100" min="0" max="100" /></td>
+                </tr>
+                <tr>
+                  <td><label>Assignment Group</label></td>
+                  <td>
+                    <select>
+                      <option>ASSIGNMENT</option>
+                      <option>QUIZ</option>
+                      <option>EXAM</option>
+                      <option>PROJECT</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><label>Display Grade As</label></td>
+                  <td>
+                    <select>
+                      <option>Percentage</option>
+                      <option>Points></option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><label>Submission Type</label></td>
+                  <td>
+                    <select>
+                      <option>Online</option>
+                      <option>Manual Input</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top"><label>Online Entry Options</label></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="wd-submission-type"
+                      value="TEXT"
+                      checked
+                    />
+                    <label>Text Entry</label> <br />
+                    <input
+                      type="checkbox"
+                      name="wd-submission-type"
+                      value="WEBSITE"
+                    />
+                    <label>Website URL</label> <br />
+                    <input
+                      type="checkbox"
+                      name="wd-submission-type"
+                      value="MEDIA"
+                    />
+                    <label>Media Recordings</label> <br />
+                    <input
+                      type="checkbox"
+                      name="wd-submission-type"
+                      value="FILE"
+                      checked
+                    />
+                    <label>File Uploads</label> <br />
+                  </td>
+                </tr>
+                <tr>
+                  <td><label>Assign</label></td>
+                  <td>
+                    Due:
+                    <br />
+                    <input
+                      type="date"
+                      name="wd-assignment-due-date"
+                      min="2024-01-08"
+                      max="2023-04-26"
+                      value="2023-01-23"
+                    />
+                    <br />
+                    Available from:
+                    <br />
+                    <input
+                      type="date"
+                      name="wd-assignment-available-date"
+                      min="2024-01-08"
+                      max="2023-04-26"
+                      value="2023-01-12"
+                    />
+                    <br />
+                    Available unitl:
+                    <br />
+                    <input
+                      type="date"
+                      name="wd-assignment-available-until-date"
+                      min="2024-01-08"
+                      max="2023-04-26"
+                      value="2023-01-25"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="/Kanbas/Courses/Assignments/screen.html">
+                      <button>Cancel</button>
+                    </a>
+                    <a href="/Kanbas/Courses/Assignments/screen.html">
+                      <button>Save</button>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
