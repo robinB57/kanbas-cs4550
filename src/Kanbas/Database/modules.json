@@ -1,0 +1,283 @@
+[
+    {
+        "_id": "M101",
+        "name": "Networks Module 1",
+        "description": "Architecture of computer networks",
+        "course": "CS3700",
+        "lessons": [
+            {
+                "_id": "L101",
+                "name": "Network Layer",
+                "description": "Understanding how the network layer works",
+                "module": "M101"
+            },
+            {
+                "_id": "L102",
+                "name": "Transport Layer",
+                "description": "Creating connections between systems",
+                "module": "M101"
+            },
+            {
+                "_id": "L103",
+                "name": "Distributed Systems",
+                "description": "Finding consensus",
+                "module": "M101"
+            }
+        ]
+        },
+    {
+        "_id": "M102",
+        "name": "Networks Module 2",
+        "description": "Security of computer networks",
+        "course": "CS3700",
+        "lessons": []
+    },
+    {
+        "_id": "M103",
+        "name": "Networks Module 3",
+        "description": "History of computer networks",
+        "course": "CS3700"
+    },
+    {
+        "_id": "M201",
+        "name": "Systems Module 1",
+        "description": "Assembly",
+        "course": "CS3650"
+    },
+    {
+        "_id": "M202",
+        "name": "Systems Module 2",
+        "description": "C",
+        "course": "CS3650"
+    },
+    {
+        "_id": "M203",
+        "name": "Systems Module 1",
+        "description": "UNIX",
+        "course": "CS3650",
+        "lessons": [
+            {
+                "_id": "L201",
+                "name": "Syscalls",
+                "description": "Interacting with the operating system",
+                "module": "M203"
+            },
+            {
+                "_id": "L202",
+                "name": "Process table",
+                "description": "Keeping track of processes",
+                "module": "M203"
+            },
+            {
+                "_id": "L203",
+                "name": "The shell",
+                "description": "Running and managing processes",
+                "module": "M203"
+            }
+        ]
+    },
+    {
+        "_id": "M301",
+        "name": "Clinical Psych Module 1",
+        "description": "Diagnosis and assessment",
+        "course": "PSYC3406",
+        "lessons": [
+            {
+                "id": "L301",
+                "name": "DSM-5",
+                "description": "Standards for diagnosis",
+                "module": "M301"
+            },
+            {
+                "id": "L302",
+                "name": "Assessment",
+                "description": "Questions for examining patients",
+                "module": "M301"
+            }
+        ]
+    },
+    {
+        "_id": "M302", 
+        "name": "Clinical Psych Module 2",
+        "description": "Neurocognitive disorders",
+        "course": "PSYC3406",
+        "lessons": [
+            {
+                "id": "L401",
+                "name": "Causes of cognitive decline",
+                "description": "Progressive atrophies and sudden injury",
+                "module": "M302"
+            },
+            {
+                "id": "L402",
+                "name": "Alzheimer's disease",
+                "description": "Impairments of memory and risk factors",
+                "module": "M302"
+            }
+        ]
+    },
+    {
+        "_id": "M303",
+        "name": "Clinical Psych Module 3",
+        "description": "Personality disorders",
+        "course": "PSYC3406"
+    },
+    {
+        "_id": "M401",
+        "name": "CogPsych Module 1",
+        "description": "Attention",
+        "course": "PSYC3466"
+    },
+    {
+        "_id": "M402",
+        "name": "CogPsych Module 2",
+        "description": "Cognitive biases",
+        "course": "PSYC3466",
+        "lessons": [
+            {
+                "id": "L501",
+                "name": "Essentialism",
+                "description": "Assuming what we see is what it is inside",
+                "module": "M402"
+            },
+            {
+                "id": "L502",
+                "name": "Hindsight bias",
+                "description": "Not always right in retrospect",
+                "module": "M402"
+            },
+            {
+                "id": "L503",
+                "name": "Eyewitness testimony",
+                "description": "Convincing our memories",
+                "module": "M402"
+            }
+        ]
+    },
+    {
+        "_id": "M403",
+        "name": "CogPsych Module 3",
+        "description": "Reasoning and problem solving",
+        "course": "PSYC3466"
+    },
+    {
+        "_id": "M501",
+        "name": "WebDev Module 1",
+        "description": "HTML",
+        "course": "CS4550",
+        "lessons": [
+            {
+                "id": "L601",
+                "name": "Basic syntax",
+                "description": "Angle brackets everywhere",
+                "module": "M501"
+            },
+            {
+                "id": "L602",
+                "name": "Elements and headers",
+                "description": "Basic text in HTML",
+                "module": "M501"
+            },
+            {
+                "id": "L603",
+                "name": "Tables",
+                "description": "Arranging elements in grids",
+                "module": "M501"
+            },
+            {
+                "id": "L604",
+                "name": "Images",
+                "description": "Placing pictures in the document",
+                "module": "M501"
+            }
+        ]
+    },
+    {
+        "_id": "M502",
+        "name": "WebDev Module 2",
+        "description": "CSS",
+        "course": "CS4550",
+        "lessons": [
+            {
+                "id": "L701",
+                "name": "Basic syntax",
+                "description": "How to use CSS",
+                "module": "M502"
+            },
+            {
+                "id": "L702",
+                "name": "Colors and sizes",
+                "description": "Styling text",
+                "module": "M502"
+            },
+            {
+                "id": "L703",
+                "name": "Positioning",
+                "description": "Changing how elements are aligned",
+                "module": "M502"
+            }
+        ]
+    },
+    {
+        "_id": "M503",
+        "name": "WebDev Module 3",
+        "description": "JavaScript",
+        "course": "CS4550"
+    },
+    {
+        "_id": "M504",
+        "name": "WebDev Module 4",
+        "description": "React",
+        "course": "CS4550",
+        "lessons": [
+            {
+                "id": "L801",
+                "name": "Creating components",
+                "description": "Building blocks of React",
+                "module": "M504"
+            },
+            {
+                "id": "L802",
+                "name": "Hooks",
+                "description": "Introducing state",
+                "module": "M504"
+            }
+        ]
+    },
+    {
+        "_id": "M601",
+        "name": "Foundations Module 1",
+        "description": "The stages of game development",
+        "course": "GAME2500"
+    },
+    {
+        "_id": "M602",
+        "name": "Foundations Module 2",
+        "description": "Integrating feedback",
+        "course": "GAME2500"
+    },
+    {
+        "_id": "M603",
+        "name": "Foundations Module 3",
+        "description": "Brainstorming and iterating",
+        "course": "GAME2500"
+    },
+    {
+        "_id": "M701",
+        "name": "Social Psych Module 1",
+        "description": "History and experimental design",
+        "course": "PSYC3402"
+    },
+    {
+        "_id": "M702",
+        "name": "Social Psych Module 2",
+        "description": "Attitudes and persuasion",
+        "course": "PSYC3402"
+    },
+    {
+        "_id": "M703",
+        "name": "Social Psych Module 3",
+        "description": "Relationships and culture",
+        "course": "PSYC3402"
+    }
+]
