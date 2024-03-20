@@ -1,10 +1,52 @@
 import { Link } from "react-router-dom";
-import { courses } from "../Database";
+import db from "../Database";
+import { useState } from "react";
+import { relative } from "path";
 
-export default function Dashboard() {
+export default function Dashboard({
+  courses,
+  course,
+  setCourse,
+  addNewCourse,
+  deleteCourse,
+  updateCourse,
+}: {
+  courses: any[];
+  course: any;
+  setCourse: (course: any) => void;
+  addNewCourse: () => void;
+  deleteCourse: (course: any) => void;
+  updateCourse: () => void;
+}) {
   return (
     <div className="p-4">
       <h1>Dashboard</h1>
+      <h5>Course</h5>
+      <input
+        value={course.name}
+        className="form-control"
+        onChange={(e) => setCourse({ ...course, name: e.target.value })}
+      />
+      <input
+        value={course.number}
+        className="form-control"
+        onChange={(e) => setCourse({ ...course, number: e.target.value })}
+      />
+      <input
+        value={course.startDate}
+        className="form-control"
+        type="date"
+        onChange={(e) => setCourse({ ...course, startDate: e.target.value })}
+      />
+      <input
+        value={course.endDate}
+        className="form-control"
+        type="date"
+        onChange={(e) => setCourse({ ...course, endDate: e.target.value })}
+      />
+      <button onClick={addNewCourse}>Add</button>
+      <button onClick={updateCourse}>Update</button>
+
       <hr />
       <h2>Published Courses (7)</h2>
       <hr />
@@ -13,30 +55,53 @@ export default function Dashboard() {
           {courses.map((course) => (
             <div key={course._id} className="col" style={{ width: 300 }}>
               <div className="card">
-                <img
-                  src={`/images/${course.image}`}
-                  alt=""
-                  className="card-img-top"
-                  style={{ height: 150 }}
-                />
-                <div className="card-body" style={{ height: 80 }}>
-                  <Link
-                    className="card-title"
-                    to={`/Kanbas/Courses/${course._id}/Home`}
-                    style={{
-                      textDecoration: "none",
-                      color: "navy",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {course.number + " " + course.name}
-                  </Link>
-                  <p className="card-text"></p>
-                  <Link
-                    to={`/Kanbas/Courses/${course._id}/Home`}
-                    className="stretched-link"
-                  ></Link>
-                </div>
+                <Link
+                  className="card-title"
+                  to={`/Kanbas/Courses/${course._id}/Home`}
+                  style={{
+                    textDecoration: "none",
+                    color: "navy",
+                    fontWeight: "bold",
+                  }}
+                >
+                  <div style={{ height: 150 }}>
+                    <img
+                      src={`/images/${course.image}`}
+                      alt=""
+                      className="card-img-top"
+                    />
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: 10,
+                        right: 10,
+                      }}
+                    >
+                      <button
+                        onClick={(event) => {
+                          event.preventDefault();
+                          setCourse(course);
+                        }}
+                        className="btn btn-light"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={(event) => {
+                          event.preventDefault();
+                          deleteCourse(course._id);
+                        }}
+                        className="btn btn-light"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                  <div className="card-body" style={{ height: 80 }}>
+                    {course.number + " " + course.name}{" "}
+                    <p className="card-text"></p>
+                  </div>
+                </Link>
               </div>
             </div>
           ))}
