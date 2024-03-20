@@ -38,6 +38,7 @@ export default function ModuleList() {
               }
               style={{ marginBottom: "5px" }}
             />
+            <br />
             <textarea
               value={module.description}
               onChange={(e) =>
