@@ -21,6 +21,14 @@ export default function Kanbas() {
   const addNewCourse = () => {
     const newCourse = { ...course, _id: new Date().getTime().toString() };
     setCourses([...courses, { ...course, ...newCourse }]);
+    setCourse({
+      _id: "0",
+      name: "New Course",
+      number: "New Number",
+      startDate: "2023-09-10",
+      endDate: "2023-12-15",
+      image: "/classes/black-class.png",
+    });
   };
   const deleteCourse = (courseId: string) => {
     setCourses(courses.filter((course) => course._id !== courseId));
