@@ -29,8 +29,7 @@
     "_id": "M102",
     "name": "Networks Module 2",
     "description": "Security of computer networks",
-    "course": "CS3700",
-    "lessons": []
+    "course": "CS3700"
   },
   {
     "_id": "M103",

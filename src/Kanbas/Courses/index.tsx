@@ -1,4 +1,3 @@
-import { courses } from "../../Kanbas/Database";
 import {
   Navigate,
   Route,
@@ -11,7 +10,7 @@ import CourseNavigation from "./Navigation";
 import Modules from "./Modules";
 import Home from "./Home";
 import Assignments from "./Assignments";
-export default function Courses() {
+export default function Courses({ courses }: { courses: any[] }) {
   const { courseId } = useParams();
   const course = courses.find((course) => course._id === courseId);
 
