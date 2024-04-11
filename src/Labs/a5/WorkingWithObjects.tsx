@@ -105,6 +105,7 @@ export default function WorkingWithObjects() {
         onChange={(e) => setModule({ ...module, name: e.target.value })}
         value={module.name}
       />
+      <br />
       <a
         href={`${MODULE_URL}/description/${module.description}`}
         className="btn btn-primary me-2"
