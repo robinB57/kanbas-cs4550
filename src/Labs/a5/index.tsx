@@ -6,7 +6,10 @@ export default function Assignment5() {
   return (
     <div>
       <h1>Assignment 5</h1>
-      <a href="http://localhost:4000/a5/welcome" className="btn btn-primary">
+      <a
+        href="https://kanbas-node-server-cs4550.onrender.com/a5/welcome"
+        className="btn btn-primary"
+      >
         Welcome
       </a>
       <EncodingParametersInURLs />

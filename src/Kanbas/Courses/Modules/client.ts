@@ -1,7 +1,9 @@
 import axios from "axios";
 
-const COURSES_API = "http://localhost:4000/api/courses";
-const MODULES_API = "http://localhost:4000/api/modules";
+const COURSES_API =
+  "https://kanbas-node-server-cs4550.onrender.com/api/courses";
+const MODULES_API =
+  "https://kanbas-node-server-cs4550.onrender.com/api/modules";
 
 export const findModulesForCourse = async (courseId: string) => {
   const response = await axios.get(`${COURSES_API}/${courseId}/modules`);

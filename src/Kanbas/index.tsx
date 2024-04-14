@@ -8,7 +8,8 @@ import { Provider } from "react-redux";
 import store from "./store";
 import axios from "axios";
 
-const COURSES_API = "http://localhost:4000/api/courses";
+const COURSES_API =
+  "https://kanbas-node-server-cs4550.onrender.com/api/courses";
 const DEFAULT_COURSE = {
   _id: -1,
   name: "New Course",

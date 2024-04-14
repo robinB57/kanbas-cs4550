@@ -13,7 +13,8 @@ import Assignments from "./Assignments";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const COURSES_API = "http://localhost:4000/api/courses";
+const COURSES_API =
+  "https://kanbas-node-server-cs4550.onrender.com/api/courses";
 
 export default function Courses() {
   const { courseId } = useParams();

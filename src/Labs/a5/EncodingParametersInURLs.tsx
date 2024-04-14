@@ -5,7 +5,9 @@ export default function EncodingParametersInURLs() {
   const [b, setB] = useState(23);
   const [welcome, setWelcome] = useState("");
   const fetchWelcome = async () => {
-    const response = await axios.get("http://localhost:4000/a5/welcome");
+    const response = await axios.get(
+      "https://kanbas-node-server-cs4550.onrender.com/a5/welcome"
+    );
     setWelcome(response.data);
   };
   useEffect(() => {
@@ -13,12 +15,14 @@ export default function EncodingParametersInURLs() {
   }, []);
   const [result, setResult] = useState(0);
   const fetchAdd = async (a: number, b: number) => {
-    const response = await axios.get(`http://localhost:4000/a5/add/${a}/${b}`);
+    const response = await axios.get(
+      `https://kanbas-node-server-cs4550.onrender.com/a5/add/${a}/${b}`
+    );
     setResult(response.data);
   };
   const fetchSubtract = async (a: number, b: number) => {
     const response = await axios.get(
-      `http://localhost:4000/a5/subtract/${a}/${b}`
+      `https://kanbas-node-server-cs4550.onrender.com/a5/subtract/${a}/${b}`
     );
     setResult(response.data);
   };
@@ -39,25 +43,25 @@ export default function EncodingParametersInURLs() {
       />
       <h3>Path Parameters</h3>
       <a
-        href={`http://localhost:4000/a5/add/${a}/${b}`}
+        href={`https://kanbas-node-server-cs4550.onrender.com/a5/add/${a}/${b}`}
         className="btn btn-primary me-2"
       >
         Add {a} + {b}
       </a>
       <a
-        href={`http://localhost:4000/a5/subtract/${a}/${b}`}
+        href={`https://kanbas-node-server-cs4550.onrender.com/a5/subtract/${a}/${b}`}
         className="btn btn-danger me-2"
       >
         Subtract {a} - {b}
       </a>
       <a
-        href={`http://localhost:4000/a5/multiply/${a}/${b}`}
+        href={`https://kanbas-node-server-cs4550.onrender.com/a5/multiply/${a}/${b}`}
         className="btn btn-success me-2"
       >
         Multiply {a} * {b}
       </a>
       <a
-        href={`http://localhost:4000/a5/divide/${a}/${b}`}
+        href={`https://kanbas-node-server-cs4550.onrender.com/a5/divide/${a}/${b}`}
         className="btn btn-warning me-2"
       >
         Divide {a} / {b}
@@ -65,25 +69,25 @@ export default function EncodingParametersInURLs() {
       <h3>Query Parameters</h3>
       <a
         className="btn btn-primary me-2"
-        href={`http://localhost:4000/a5/calculator?operation=add&a=${a}&b=${b}`}
+        href={`https://kanbas-node-server-cs4550.onrender.com/a5/calculator?operation=add&a=${a}&b=${b}`}
       >
         Add {a} + {b}
       </a>
       <a
         className="btn btn-danger me-2"
-        href={`http://localhost:4000/a5/calculator?operation=subtract&a=${a}&b=${b}`}
+        href={`https://kanbas-node-server-cs4550.onrender.com/a5/calculator?operation=subtract&a=${a}&b=${b}`}
       >
         Subtract {a} - {b}
       </a>
       <a
         className="btn btn-success me-2"
-        href={`http://localhost:4000/a5/calculator?operation=multiply&a=${a}&b=${b}`}
+        href={`https://kanbas-node-server-cs4550.onrender.com/a5/calculator?operation=multiply&a=${a}&b=${b}`}
       >
         Multiply {a} * {b}
       </a>
       <a
         className="btn btn-warning me-2"
-        href={`http://localhost:4000/a5/calculator?operation=divide&a=${a}&b=${b}`}
+        href={`https://kanbas-node-server-cs4550.onrender.com/a5/calculator?operation=divide&a=${a}&b=${b}`}
       >
         Divide {a} / {b}
       </a>

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const ASSIGNMENT_URL = "http://localhost:4000/a5/assignment";
-const MODULE_URL = "http://localhost:4000/a5/module";
+const ASSIGNMENT_URL =
+  "https://kanbas-node-server-cs4550.onrender.com/a5/assignment";
+const MODULE_URL = "https://kanbas-node-server-cs4550.onrender.com/a5/module";
 
 export default function WorkingWithObjects() {
   const [assignment, setAssignment] = useState({
@@ -39,23 +40,26 @@ export default function WorkingWithObjects() {
       <h3>Working With Objects</h3>
       <h4>Retrieving Objects</h4>
       <a
-        href="http://localhost:4000/a5/assignment"
+        href="https://kanbas-node-server-cs4550.onrender.com/a5/assignment"
         className="btn btn-primary me-2"
       >
         Get Assignment
       </a>
-      <a href="http://localhost:4000/a5/module" className="btn btn-primary">
+      <a
+        href="https://kanbas-node-server-cs4550.onrender.com/a5/module"
+        className="btn btn-primary"
+      >
         Get Module
       </a>
       <h4>Retrieving Properties</h4>
       <a
-        href="http://localhost:4000/a5/assignment/title"
+        href="https://kanbas-node-server-cs4550.onrender.com/a5/assignment/title"
         className="btn btn-primary me-2"
       >
         Get Assignment Title
       </a>
       <a
-        href="http://localhost:4000/a5/module/name"
+        href="https://kanbas-node-server-cs4550.onrender.com/a5/module/name"
         className="btn btn-primary me-2"
       >
         Get Module Name
