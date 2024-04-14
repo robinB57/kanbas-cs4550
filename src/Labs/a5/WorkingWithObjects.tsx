@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+const ASSIGNMENT_URL = "http://localhost:4000/a5/assignment";
+const MODULE_URL = "http://localhost:4000/a5/module";
 
 export default function WorkingWithObjects() {
   const [assignment, setAssignment] = useState({
@@ -16,8 +20,19 @@ export default function WorkingWithObjects() {
     course: "CS4550",
   });
 
-  const ASSIGNMENT_URL = "http://localhost:4000/a5/assignment";
-  const MODULE_URL = "http://localhost:4000/a5/module";
+  const fetchAssignment = async () => {
+    const response = await axios.get(`${ASSIGNMENT_URL}`);
+    setAssignment(response.data);
+  };
+  const updateTitle = async () => {
+    const response = await axios.get(
+      `${ASSIGNMENT_URL}/title/${assignment.title}`
+    );
+    setAssignment(response.data);
+  };
+  useEffect(() => {
+    fetchAssignment();
+  }, []);
 
   return (
     <div>
@@ -117,6 +132,19 @@ export default function WorkingWithObjects() {
         onChange={(e) => setModule({ ...module, description: e.target.value })}
         value={module.description}
       />
+      <h3>Modifying Properties</h3>
+      <input
+        onChange={(e) =>
+          setAssignment({
+            ...assignment,
+            title: e.target.value,
+          })
+        }
+        value={assignment.title}
+        type="text"
+      />
+      <button onClick={updateTitle}>Update Title to: {assignment.title}</button>
+      <button onClick={fetchAssignment}>Fetch Assignment</button>
     </div>
   );
 }
