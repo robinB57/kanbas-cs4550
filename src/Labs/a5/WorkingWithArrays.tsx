@@ -46,9 +46,6 @@ export default function WorkingWithArrays() {
         Get Todos
       </a>
       <h3>Creating new Items in an Array</h3>
-      <a href={`${TODO_API}/create`} className="btn btn-primary">
-        Create Todo
-      </a>
       <h4>Retrieving an Item from an Array by ID</h4>
       <a href={`${TODO_API}/${todo.id}`} className="btn btn-primary me-2">
         Get Todo by ID

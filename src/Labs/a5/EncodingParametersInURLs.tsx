@@ -47,7 +47,7 @@ export default function EncodingParametersInURLs() {
         Subtract {a} - {b}
       </a>
       <a
-        href={`${LAB_5_API}/a5/multiply/${a}/${b}`}
+        href={`${LAB_5_API}/multiply/${a}/${b}`}
         className="btn btn-success me-2"
       >
         Multiply {a} * {b}

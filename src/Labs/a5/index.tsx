@@ -7,7 +7,7 @@ export default function Assignment5() {
   return (
     <div>
       <h1>Assignment 5</h1>
-      <a href={`${LAB_5_API}//welcome`} className="btn btn-primary">
+      <a href={`${LAB_5_API}/welcome`} className="btn btn-primary">
         Welcome
       </a>
       <EncodingParametersInURLs />
