@@ -21,7 +21,7 @@ export default function WorkingWithArrays() {
     setTodo(response.data);
   };
   const deleteTodo = async (todo: any) => {
-    const response = await axios.delete(`${API}/${todo.id}`);
+    await axios.delete(`${API}/${todo.id}`);
     setTodos(todos.filter((t) => t.id !== todo.id));
   };
   const postTodo = async () => {
@@ -29,7 +29,7 @@ export default function WorkingWithArrays() {
     setTodos([...todos, response.data]);
   };
   const updateTodo = async () => {
-    const response = await axios.put(`${API}/${todo.id}`, todo);
+    await axios.put(`${API}/${todo.id}`, todo);
     setTodos(todos.map((t) => (t.id === todo.id ? todo : t)));
   };
 

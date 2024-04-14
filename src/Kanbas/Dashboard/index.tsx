@@ -1,7 +1,4 @@
 import { Link } from "react-router-dom";
-import db from "../Database";
-import { useState } from "react";
-import { relative } from "path";
 
 export default function Dashboard({
   courses,

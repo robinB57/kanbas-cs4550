@@ -1,12 +1,15 @@
 import React from "react";
 import { FaCheckCircle, FaEllipsisV, FaPlusCircle } from "react-icons/fa";
+import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { assignments } from "../../Database";
+import { KanbasState } from "../../store";
+
 export default function Assignments() {
   const { courseId } = useParams();
-  const assignmentList = assignments.filter(
-    (assignment) => assignment.course === courseId
+  const assignmentList = useSelector(
+    (state: KanbasState) => state.assignmentsReducer.assignments
   );
+
   return (
     <>
       <table>
