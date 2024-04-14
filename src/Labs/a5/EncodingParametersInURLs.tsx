@@ -37,10 +37,7 @@ export default function EncodingParametersInURLs() {
         value={b}
       />
       <h3>Path Parameters</h3>
-      <a
-        href={`${LAB_5_API}/a5/add/${a}/${b}`}
-        className="btn btn-primary me-2"
-      >
+      <a href={`${LAB_5_API}/add/${a}/${b}`} className="btn btn-primary me-2">
         Add {a} + {b}
       </a>
       <a

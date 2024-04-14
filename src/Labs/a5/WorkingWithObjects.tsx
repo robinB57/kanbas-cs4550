@@ -42,7 +42,7 @@ export default function WorkingWithObjects() {
       <a href={`${LAB_5_API}/assignment`} className="btn btn-primary me-2">
         Get Assignment
       </a>
-      <a href={`${LAB_5_API}/a5/module`} className="btn btn-primary">
+      <a href={`${LAB_5_API}/module`} className="btn btn-primary">
         Get Module
       </a>
       <h4>Retrieving Properties</h4>
