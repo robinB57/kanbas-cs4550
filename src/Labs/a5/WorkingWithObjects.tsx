@@ -8,7 +8,7 @@ export default function WorkingWithObjects() {
   const [assignment, setAssignment] = useState({
     id: 1,
     title: "NodeJS Assignment",
-    description: "Create a NodeJS server with ExpressJS",
+    description: "Create a NodeJS server",
     due: "2021-10-10",
     completed: false,
     score: 0,
@@ -133,6 +133,10 @@ export default function WorkingWithObjects() {
         value={module.description}
       />
       <h3>Modifying Properties</h3>
+      <button onClick={fetchAssignment} className="btn btn-primary">
+        Fetch Assignment
+      </button>
+      <br />
       <input
         onChange={(e) =>
           setAssignment({
@@ -142,9 +146,11 @@ export default function WorkingWithObjects() {
         }
         value={assignment.title}
         type="text"
+        className="me-2"
       />
-      <button onClick={updateTitle}>Update Title to: {assignment.title}</button>
-      <button onClick={fetchAssignment}>Fetch Assignment</button>
+      <button onClick={updateTitle} className="btn btn-primary">
+        Update Title to: {assignment.title}
+      </button>
     </div>
   );
 }

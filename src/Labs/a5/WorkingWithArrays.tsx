@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const API = "http://localhost:4000/a5/todos";
 
@@ -6,10 +7,35 @@ export default function WorkingWithArrays() {
   const [todo, setTodo] = useState({
     id: 1,
     title: "NodeJS Assignment",
-    description: "Create a NodeJS server with ExpressJS",
+    description: "Create a NodeJS server",
     due: "2021-09-09",
     completed: false,
   });
+  const [todos, setTodos] = useState<any[]>([]);
+  const fetchTodos = async () => {
+    const response = await axios.get(API);
+    setTodos(response.data);
+  };
+  const fetchTodoById = async (id: number) => {
+    const response = await axios.get(`${API}/${id}`);
+    setTodo(response.data);
+  };
+  const deleteTodo = async (todo: any) => {
+    const response = await axios.delete(`${API}/${todo.id}`);
+    setTodos(todos.filter((t) => t.id !== todo.id));
+  };
+  const postTodo = async () => {
+    const response = await axios.post(API, todo);
+    setTodos([...todos, response.data]);
+  };
+  const updateTodo = async () => {
+    const response = await axios.put(`${API}/${todo.id}`, todo);
+    setTodos(todos.map((t) => (t.id === todo.id ? todo : t)));
+  };
+
+  useEffect(() => {
+    fetchTodos();
+  }, []);
 
   return (
     <div>
@@ -56,7 +82,7 @@ export default function WorkingWithArrays() {
         href={`${API}/${todo.id}/completed/${todo.completed}`}
         className="btn btn-primary me-2"
       >
-        Update Completed to {todo.title}
+        Update Completed to {todo.completed.toString()}
       </a>
       <input
         type="checkbox"
@@ -67,6 +93,7 @@ export default function WorkingWithArrays() {
             completed: e.target.checked,
           })
         }
+        checked={todo.completed}
       />
       <br />
       <a
@@ -81,7 +108,7 @@ export default function WorkingWithArrays() {
         onChange={(e) =>
           setTodo({
             ...todo,
-            title: e.target.value,
+            description: e.target.value,
           })
         }
       />
@@ -93,6 +120,40 @@ export default function WorkingWithArrays() {
       <a href={`${API}?completed=true`} className="btn btn-primary">
         Get Completed Todos
       </a>
+      <h3>Fetching Todos</h3>
+      <button onClick={postTodo} className="btn btn-primary">
+        Post New Todo
+      </button>
+      <br />
+      <button onClick={updateTodo} className="btn btn-success">
+        Update Todo
+      </button>
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id} className="mb-2">
+            <input
+              checked={todo.completed}
+              type="checkbox"
+              className="me-2"
+              readOnly
+            />
+            {todo.title}
+            <p className="mb-0">{todo.description}</p>
+            <button
+              onClick={() => fetchTodoById(todo.id)}
+              className="btn btn-warning me-2"
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => deleteTodo(todo)}
+              className="btn btn-danger me-2"
+            >
+              Remove
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
