@@ -12,9 +12,7 @@ import Home from "./Home";
 import Assignments from "./Assignments";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-const COURSES_API =
-  "https://kanbas-node-server-cs4550.onrender.com/api/courses";
+import { COURSES_API } from "../../constants";
 
 export default function Courses() {
   const { courseId } = useParams();

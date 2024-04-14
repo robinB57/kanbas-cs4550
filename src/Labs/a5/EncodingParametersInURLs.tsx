@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { LAB_5_API } from "../../constants";
 export default function EncodingParametersInURLs() {
   const [a, setA] = useState(34);
   const [b, setB] = useState(23);
   const [welcome, setWelcome] = useState("");
   const fetchWelcome = async () => {
-    const response = await axios.get(
-      "https://kanbas-node-server-cs4550.onrender.com/a5/welcome"
-    );
+    const response = await axios.get(`${LAB_5_API}/welcome`);
     setWelcome(response.data);
   };
   useEffect(() => {
@@ -15,15 +14,11 @@ export default function EncodingParametersInURLs() {
   }, []);
   const [result, setResult] = useState(0);
   const fetchAdd = async (a: number, b: number) => {
-    const response = await axios.get(
-      `https://kanbas-node-server-cs4550.onrender.com/a5/add/${a}/${b}`
-    );
+    const response = await axios.get(`${LAB_5_API}/add/${a}/${b}`);
     setResult(response.data);
   };
   const fetchSubtract = async (a: number, b: number) => {
-    const response = await axios.get(
-      `https://kanbas-node-server-cs4550.onrender.com/a5/subtract/${a}/${b}`
-    );
+    const response = await axios.get(`${LAB_5_API}/subtract/${a}/${b}`);
     setResult(response.data);
   };
 
@@ -43,25 +38,25 @@ export default function EncodingParametersInURLs() {
       />
       <h3>Path Parameters</h3>
       <a
-        href={`https://kanbas-node-server-cs4550.onrender.com/a5/add/${a}/${b}`}
+        href={`${LAB_5_API}/a5/add/${a}/${b}`}
         className="btn btn-primary me-2"
       >
         Add {a} + {b}
       </a>
       <a
-        href={`https://kanbas-node-server-cs4550.onrender.com/a5/subtract/${a}/${b}`}
+        href={`${LAB_5_API}/subtract/${a}/${b}`}
         className="btn btn-danger me-2"
       >
         Subtract {a} - {b}
       </a>
       <a
-        href={`https://kanbas-node-server-cs4550.onrender.com/a5/multiply/${a}/${b}`}
+        href={`${LAB_5_API}/a5/multiply/${a}/${b}`}
         className="btn btn-success me-2"
       >
         Multiply {a} * {b}
       </a>
       <a
-        href={`https://kanbas-node-server-cs4550.onrender.com/a5/divide/${a}/${b}`}
+        href={`${LAB_5_API}/divide/${a}/${b}`}
         className="btn btn-warning me-2"
       >
         Divide {a} / {b}
@@ -69,25 +64,25 @@ export default function EncodingParametersInURLs() {
       <h3>Query Parameters</h3>
       <a
         className="btn btn-primary me-2"
-        href={`https://kanbas-node-server-cs4550.onrender.com/a5/calculator?operation=add&a=${a}&b=${b}`}
+        href={`${LAB_5_API}/calculator?operation=add&a=${a}&b=${b}`}
       >
         Add {a} + {b}
       </a>
       <a
         className="btn btn-danger me-2"
-        href={`https://kanbas-node-server-cs4550.onrender.com/a5/calculator?operation=subtract&a=${a}&b=${b}`}
+        href={`${LAB_5_API}/calculator?operation=subtract&a=${a}&b=${b}`}
       >
         Subtract {a} - {b}
       </a>
       <a
         className="btn btn-success me-2"
-        href={`https://kanbas-node-server-cs4550.onrender.com/a5/calculator?operation=multiply&a=${a}&b=${b}`}
+        href={`${LAB_5_API}/calculator?operation=multiply&a=${a}&b=${b}`}
       >
         Multiply {a} * {b}
       </a>
       <a
         className="btn btn-warning me-2"
-        href={`https://kanbas-node-server-cs4550.onrender.com/a5/calculator?operation=divide&a=${a}&b=${b}`}
+        href={`${LAB_5_API}/calculator?operation=divide&a=${a}&b=${b}`}
       >
         Divide {a} / {b}
       </a>

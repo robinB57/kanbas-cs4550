@@ -7,9 +7,8 @@ import React, { useState, useEffect } from "react";
 import { Provider } from "react-redux";
 import store from "./store";
 import axios from "axios";
+import { COURSES_API } from "../constants";
 
-const COURSES_API =
-  "https://kanbas-node-server-cs4550.onrender.com/api/courses";
 const DEFAULT_COURSE = {
   _id: -1,
   name: "New Course",

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { LAB_5_API } from "../../constants";
 
-const API = "https://kanbas-node-server-cs4550.onrender.com/a5/todos";
+const TODO_API = `${LAB_5_API}/todos`;
 
 export default function WorkingWithArrays() {
   const [todo, setTodo] = useState({
@@ -13,23 +14,23 @@ export default function WorkingWithArrays() {
   });
   const [todos, setTodos] = useState<any[]>([]);
   const fetchTodos = async () => {
-    const response = await axios.get(API);
+    const response = await axios.get(TODO_API);
     setTodos(response.data);
   };
   const fetchTodoById = async (id: number) => {
-    const response = await axios.get(`${API}/${id}`);
+    const response = await axios.get(`${TODO_API}/${id}`);
     setTodo(response.data);
   };
   const deleteTodo = async (todo: any) => {
-    await axios.delete(`${API}/${todo.id}`);
+    await axios.delete(`${TODO_API}/${todo.id}`);
     setTodos(todos.filter((t) => t.id !== todo.id));
   };
   const postTodo = async () => {
-    const response = await axios.post(API, todo);
+    const response = await axios.post(TODO_API, todo);
     setTodos([...todos, response.data]);
   };
   const updateTodo = async () => {
-    await axios.put(`${API}/${todo.id}`, todo);
+    await axios.put(`${TODO_API}/${todo.id}`, todo);
     setTodos(todos.map((t) => (t.id === todo.id ? todo : t)));
   };
 
@@ -41,15 +42,15 @@ export default function WorkingWithArrays() {
     <div>
       <h3>Working with Arrays</h3>
       <h4>Retrieving Arrays</h4>
-      <a href={API} className="btn btn-primary">
+      <a href={TODO_API} className="btn btn-primary">
         Get Todos
       </a>
       <h3>Creating new Items in an Array</h3>
-      <a href={`${API}/create`} className="btn btn-primary">
+      <a href={`${TODO_API}/create`} className="btn btn-primary">
         Create Todo
       </a>
       <h4>Retrieving an Item from an Array by ID</h4>
-      <a href={`${API}/${todo.id}`} className="btn btn-primary me-2">
+      <a href={`${TODO_API}/${todo.id}`} className="btn btn-primary me-2">
         Get Todo by ID
       </a>
       <input
@@ -62,7 +63,7 @@ export default function WorkingWithArrays() {
       />
       <h3>Updating an Item in an Array</h3>
       <a
-        href={`${API}/${todo.id}/title/${todo.title}`}
+        href={`${TODO_API}/${todo.id}/title/${todo.title}`}
         className="btn btn-primary me-2"
       >
         Update Title to {todo.title}
@@ -79,7 +80,7 @@ export default function WorkingWithArrays() {
       />
       <br />
       <a
-        href={`${API}/${todo.id}/completed/${todo.completed}`}
+        href={`${TODO_API}/${todo.id}/completed/${todo.completed}`}
         className="btn btn-primary me-2"
       >
         Update Completed to {todo.completed.toString()}
@@ -97,7 +98,7 @@ export default function WorkingWithArrays() {
       />
       <br />
       <a
-        href={`${API}/${todo.id}/description/${todo.description}`}
+        href={`${TODO_API}/${todo.id}/description/${todo.description}`}
         className="btn btn-primary me-2"
       >
         Update Description to {todo.description}
@@ -113,11 +114,11 @@ export default function WorkingWithArrays() {
         }
       />
       <h3>Deleting from an Array</h3>
-      <a href={`${API}/${todo.id}/delete`} className="btn btn-primary">
+      <a href={`${TODO_API}/${todo.id}/delete`} className="btn btn-primary">
         Delete Todo with ID = {todo.id}
       </a>
       <h3>Filtering Array Items</h3>
-      <a href={`${API}?completed=true`} className="btn btn-primary">
+      <a href={`${TODO_API}?completed=true`} className="btn btn-primary">
         Get Completed Todos
       </a>
       <h3>Fetching Todos</h3>
