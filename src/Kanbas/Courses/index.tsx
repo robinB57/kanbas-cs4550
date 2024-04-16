@@ -10,9 +10,21 @@ import CourseNavigation from "./Navigation";
 import Modules from "./Modules";
 import Home from "./Home";
 import Assignments from "./Assignments";
-export default function Courses({ courses }: { courses: any[] }) {
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { COURSES_API } from "../../constants";
+
+export default function Courses() {
   const { courseId } = useParams();
-  const course = courses.find((course) => course._id === courseId);
+  const [course, setCourse] = useState<any>({ _id: "" });
+  const findCourseById = async (courseId?: string) => {
+    const response = await axios.get(`${COURSES_API}/${courseId}`);
+    setCourse(response.data);
+  };
+
+  useEffect(() => {
+    findCourseById(courseId);
+  }, [courseId]);
 
   const { pathname } = useLocation();
   const breadcrumbs = pathname.split("/").slice(4);

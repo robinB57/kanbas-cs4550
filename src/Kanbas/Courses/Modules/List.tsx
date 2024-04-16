@@ -1,21 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./module-list.css";
-import { FaEllipsisV, FaCheckCircle, FaPlusCircle } from "react-icons/fa";
+import { FaEllipsisV, FaCheckCircle } from "react-icons/fa";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../store";
-import { addModule, deleteModule, setModule, updateModule } from "./reducer";
+import {
+  addModule,
+  deleteModule,
+  setModule,
+  updateModule,
+  setModules,
+} from "./reducer";
+import * as client from "./client";
+
 export default function ModuleList() {
   const { courseId } = useParams();
+  useEffect(() => {
+    client
+      .findModulesForCourse(courseId as string)
+      .then((modules) => dispatch(setModules(modules)));
+  }, [courseId]);
 
-  const moduleList = useSelector(
-    (state: KanbasState) => state.modulesReducer.modules
-  );
   const module = useSelector(
     (state: KanbasState) => state.modulesReducer.module
   );
+  const moduleList = useSelector(
+    (state: KanbasState) => state.modulesReducer.modules
+  );
   const dispatch = useDispatch();
-  const [selectedModule, setSelectedModule] = useState(moduleList[0]);
+  const [selectedModuleId, setSelectedModuleId] = useState("-1");
+
+  const handleAddModule = async () => {
+    const newModule = await client.createModule(courseId as string, module);
+    dispatch(addModule(newModule));
+  };
+  const handleUpdateModule = async () => {
+    await client.updateModule(module);
+    dispatch(updateModule(module));
+  };
+  const handleDeleteModule = async (moduleId: string) => {
+    await client.deleteModule(moduleId);
+    dispatch(deleteModule(moduleId));
+  };
 
   return (
     <>
@@ -28,7 +54,6 @@ export default function ModuleList() {
           <option>Publish Modules Only</option>
           <option>Unpublish All Modules</option>
         </select>
-        <button>+ Module</button>
         <ul className="list-group wd-modules">
           <li className="list-group-item">
             <input
@@ -48,15 +73,13 @@ export default function ModuleList() {
             />
             <br />
             <button
-              onClick={() =>
-                dispatch(addModule({ ...module, course: courseId }))
-              }
+              onClick={handleAddModule}
               className="btn btn-success btn-sm"
             >
               Add
             </button>
             <button
-              onClick={() => dispatch(updateModule(module))}
+              onClick={handleUpdateModule}
               className="btn btn-primary btn-sm"
               style={{ marginLeft: "5px" }}
             >
@@ -67,16 +90,17 @@ export default function ModuleList() {
           {moduleList
             .filter((module) => module.course === courseId)
             .map((module, index) => (
-              <li
-                key={index}
-                className="list-group-item"
-                onClick={() => setSelectedModule(module)}
-              >
+              <li key={index} className="list-group-item">
                 <div
                   style={
-                    selectedModule._id === module._id
+                    selectedModuleId === module._id
                       ? { marginBottom: "10px" }
                       : {}
+                  }
+                  onClick={() =>
+                    selectedModuleId === module._id
+                      ? setSelectedModuleId("-1")
+                      : setSelectedModuleId(module._id)
                   }
                 >
                   <FaEllipsisV className="me-2" />
@@ -84,13 +108,19 @@ export default function ModuleList() {
 
                   <span className="float-end">
                     <button
-                      onClick={() => dispatch(setModule(module))}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        dispatch(setModule(module));
+                      }}
                       className="btn btn-primary btn-sm"
                     >
                       Edit
                     </button>
                     <button
-                      onClick={() => dispatch(deleteModule(module._id))}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleDeleteModule(module._id);
+                      }}
                       className="btn btn-danger btn-sm"
                       style={{ marginLeft: "5px" }}
                     >
@@ -98,7 +128,7 @@ export default function ModuleList() {
                     </button>
                   </span>
                 </div>
-                {selectedModule._id === module._id && (
+                {selectedModuleId === module._id && (
                   <ul className="list-group">
                     {module.lessons ? (
                       module.lessons?.map((lesson: any, index: any) => (
