@@ -1,47 +1,42 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { User } from "./client";
 import * as client from "./client";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-export default function Signin() {
+export default function Signup() {
   const [error, setError] = useState("");
-  const [credentials, setCredentials] = useState<User>({
-    _id: "",
-    username: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    role: "USER",
-  });
+  const [user, setUser] = useState({ username: "", password: "" });
   const [passwordHidden, setPasswordHidden] = useState(true);
   const navigate = useNavigate();
-
-  const signin = async () => {
+  const signup = async () => {
     try {
-      await client.signin(credentials);
+      await client.signup(user);
       navigate("/Kanbas/Account/Profile");
     } catch (err: any) {
-      console.log(err);
       setError(err.response.data.message);
     }
   };
-
   return (
     <div>
-      <h1>Signin</h1>
+      <h1>Signup</h1>
       {error && <div>{error}</div>}
       <input
-        value={credentials.username}
+        value={user.username}
         onChange={(e) =>
-          setCredentials({ ...credentials, username: e.target.value })
+          setUser({
+            ...user,
+            username: e.target.value,
+          })
         }
       />
       <input
         type={passwordHidden ? "password" : "text"}
-        value={credentials.password}
+        value={user.password}
         onChange={(e) =>
-          setCredentials({ ...credentials, password: e.target.value })
+          setUser({
+            ...user,
+            password: e.target.value,
+          })
         }
       />
       {passwordHidden ? (
@@ -50,16 +45,9 @@ export default function Signin() {
         <FaEye onClick={() => setPasswordHidden(!passwordHidden)} />
       )}
       <br />
-      <button onClick={signin} className="btn btn-primary">
+      <button onClick={signup} className="btn btn-success">
         {" "}
-        Sign In{" "}
-      </button>
-      <br /> <br />
-      <button
-        onClick={() => navigate("/Kanbas/Account/Signup")}
-        className="btn btn-warning"
-      >
-        Create an Account
+        Signup{" "}
       </button>
     </div>
   );

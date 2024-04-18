@@ -16,7 +16,7 @@ export default function Dashboard({
   updateCourse: () => void;
 }) {
   return (
-    <div className="p-4">
+    <div>
       <h1>Dashboard</h1>
       <h5>Course</h5>
       <input
@@ -63,7 +63,7 @@ export default function Dashboard({
                 >
                   <div style={{ height: 150 }}>
                     <img
-                      src={`/images/${course.image}`}
+                      src={`/images${course.image}`}
                       alt=""
                       className="card-img-top"
                     />

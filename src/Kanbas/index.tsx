@@ -8,6 +8,8 @@ import { Provider } from "react-redux";
 import store from "./store";
 import axios from "axios";
 import { COURSES_API } from "../constants";
+import Account from "./Account";
+import * as client from "../Users/client";
 
 const DEFAULT_COURSE = {
   _id: -1,
@@ -55,12 +57,12 @@ export default function Kanbas() {
     <Provider store={store}>
       <div className="d-flex">
         <KanbasNavigation />
-        <div style={{ flexGrow: 1 }}>
+        <div style={{ flexGrow: 1 }} className="container-fluid p-4">
           <Routes>
             <Route path="/" element={<Navigate to="Dashboard" />} />
-            <Route path="Account" element={<h1>Account</h1>} />
+            <Route path="/Account/*" element={<Account />} />
             <Route
-              path="Dashboard"
+              path="/Dashboard"
               element={
                 <Dashboard
                   courses={courses}
@@ -72,7 +74,7 @@ export default function Kanbas() {
                 />
               }
             />
-            <Route path="Courses/:courseId/*" element={<Courses />} />
+            <Route path="/Courses/:courseId/*" element={<Courses />} />
           </Routes>
         </div>
       </div>
