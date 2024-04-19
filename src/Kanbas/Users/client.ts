@@ -1,5 +1,5 @@
 import axios from "axios";
-import { USERS_API } from "../constants";
+import { USERS_API } from "../../constants";
 
 export interface User {
   _id: string;

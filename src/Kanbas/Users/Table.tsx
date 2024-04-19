@@ -2,9 +2,16 @@ import React, { useState, useEffect } from "react";
 import * as client from "./client";
 import { User } from "./client";
 import {
+  BsCheck,
+  BsCheck2,
   BsFillCheckCircleFill,
+  BsFloppy,
   BsPencil,
+  BsPersonPlus,
+  BsPlus,
   BsPlusCircleFill,
+  BsSave,
+  BsSave2,
   BsTrash,
   BsTrash3Fill,
 } from "react-icons/bs";
@@ -19,7 +26,7 @@ export default function UserTable() {
     lastName: "",
     role: "USER",
   });
-  const [role, setRole] = useState("USER");
+  const [role, setRole] = useState("");
 
   const selectUser = async (user: User) => {
     try {
@@ -49,8 +56,11 @@ export default function UserTable() {
   };
   const updateUser = async () => {
     try {
-      await client.updateUser(user);
-      setUsers(users.map((u) => (u._id === user._id ? user : u)));
+      const updatedUser = await client.updateUser(user);
+      setUser(updatedUser);
+      setUsers(
+        users.map((u) => (u._id === user._id ? (updateUser as any) : u))
+      );
     } catch (err) {
       console.log(err);
     }
@@ -73,9 +83,12 @@ export default function UserTable() {
       <h1>User Table</h1>
       <select
         onChange={(e) => fetchUsersByRole(e.target.value)}
-        value={role || "USER"}
+        value={role}
         className="form-control w-25 float-end"
       >
+        <option selected value="">
+          All users
+        </option>
         <option value="USER">User</option>
         <option value="ADMIN">Admin</option>
         <option value="FACULTY">Faculty</option>
@@ -127,11 +140,12 @@ export default function UserTable() {
               </select>
             </td>
             <td>
-              <BsFillCheckCircleFill
-                onClick={updateUser}
-                className="me-2 text-success fs-1 text"
-              />
-              <BsPlusCircleFill onClick={createUser} />
+              <button onClick={updateUser} className="btn btn-primary me-2">
+                <BsFloppy />
+              </button>
+              <button onClick={createUser} className="btn btn-success me-2">
+                <BsPersonPlus />
+              </button>
             </td>
           </tr>
         </thead>
@@ -149,8 +163,11 @@ export default function UserTable() {
                 >
                   <BsTrash />
                 </button>
-                <button className="btn btn-warning me-2">
-                  <BsPencil onClick={() => selectUser(user)} />
+                <button
+                  onClick={() => selectUser(user)}
+                  className="btn btn-warning me-2"
+                >
+                  <BsPencil />
                 </button>
               </td>
             </tr>

@@ -41,8 +41,12 @@ export default function Dashboard({
         type="date"
         onChange={(e) => setCourse({ ...course, endDate: e.target.value })}
       />
-      <button onClick={addNewCourse}>Add</button>
-      <button onClick={updateCourse}>Update</button>
+      <button onClick={addNewCourse} className="btn btn-primary me-2">
+        Add
+      </button>
+      <button onClick={updateCourse} className="btn btn-warning">
+        Update
+      </button>
 
       <hr />
       <h2>Published Courses ({courses.length})</h2>

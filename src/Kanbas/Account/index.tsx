@@ -1,8 +1,8 @@
-import Profile from "../../Users/Profile";
-import Signin from "../../Users/Signin";
+import Profile from "../Users/Profile";
+import Signin from "../Users/Signin";
 import { Routes, Route, Navigate } from "react-router-dom";
-import UserTable from "../../Users/Table";
-import Signup from "../../Users/Signup";
+import UserTable from "../Users/Table";
+import Signup from "../Users/Signup";
 
 export default function Account() {
   return (

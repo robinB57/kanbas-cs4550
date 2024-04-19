@@ -22,7 +22,8 @@ export default function Profile() {
   }
 
   async function save() {
-    await client.updateUser(profile);
+    const updatedProfile = await client.updateUser(profile);
+    setProfile(updatedProfile);
   }
 
   async function signout() {
@@ -45,6 +46,7 @@ export default function Profile() {
         <div className="form-group">
           <input
             value={profile.username}
+            placeholder="Username"
             onChange={(e) =>
               setProfile({ ...profile, username: e.target.value })
             }
@@ -52,6 +54,7 @@ export default function Profile() {
           />
           <input
             type={passwordHidden ? "password" : "text"}
+            placeholder="Password"
             value={profile.password}
             onChange={(e) =>
               setProfile({ ...profile, password: e.target.value })
@@ -65,6 +68,7 @@ export default function Profile() {
           )}
           <input
             value={profile.firstName}
+            placeholder="First name"
             onChange={(e) =>
               setProfile({ ...profile, firstName: e.target.value })
             }
@@ -72,19 +76,22 @@ export default function Profile() {
           />
           <input
             value={profile.lastName}
+            placeholder="Last name"
             onChange={(e) =>
               setProfile({ ...profile, lastName: e.target.value })
             }
             className="form-control"
           />
           <input
-            value={profile.dob}
+            value={profile.dob ? profile.dob.split("T")[0] : ""}
+            placeholder="DOB"
             type="date"
             onChange={(e) => setProfile({ ...profile, dob: e.target.value })}
             className="form-control"
           />
           <input
             value={profile.email}
+            placeholder="Email Address"
             onChange={(e) => setProfile({ ...profile, email: e.target.value })}
             className="form-control"
           />

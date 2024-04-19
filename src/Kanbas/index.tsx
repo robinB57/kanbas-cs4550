@@ -9,12 +9,11 @@ import store from "./store";
 import axios from "axios";
 import { COURSES_API } from "../constants";
 import Account from "./Account";
-import * as client from "../Users/client";
 
 const DEFAULT_COURSE = {
   _id: -1,
   name: "New Course",
-  number: "New Number",
+  number: "TEST1234",
   startDate: "2023-09-10",
   endDate: "2023-12-15",
   image: "/classes/black-class.png",
