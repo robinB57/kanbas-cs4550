@@ -57,10 +57,8 @@ export default function UserTable() {
   const updateUser = async () => {
     try {
       const updatedUser = await client.updateUser(user);
+      setUsers(users.map((u) => (u._id === user._id ? updatedUser : u)));
       setUser(updatedUser);
-      setUsers(
-        users.map((u) => (u._id === user._id ? (updateUser as any) : u))
-      );
     } catch (err) {
       console.log(err);
     }
@@ -83,12 +81,10 @@ export default function UserTable() {
       <h1>User Table</h1>
       <select
         onChange={(e) => fetchUsersByRole(e.target.value)}
-        value={role}
         className="form-control w-25 float-end"
+        defaultValue={role}
       >
-        <option selected value="">
-          All users
-        </option>
+        <option value="">All users</option>
         <option value="USER">User</option>
         <option value="ADMIN">Admin</option>
         <option value="FACULTY">Faculty</option>
