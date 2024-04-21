@@ -17,6 +17,7 @@ export default function Dashboard({
 }) {
   return (
     <div>
+      <p>{process.env.REACT_APP_BASE_API_URL}</p>
       <h1>Dashboard</h1>
       <h5>Course</h5>
       <input
