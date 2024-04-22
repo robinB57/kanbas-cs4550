@@ -8,11 +8,12 @@ import { Provider } from "react-redux";
 import store from "./store";
 import axios from "axios";
 import { COURSES_API } from "../constants";
+import Account from "./Account";
 
 const DEFAULT_COURSE = {
   _id: -1,
   name: "New Course",
-  number: "New Number",
+  number: "TEST1234",
   startDate: "2023-09-10",
   endDate: "2023-12-15",
   image: "/classes/black-class.png",
@@ -55,12 +56,12 @@ export default function Kanbas() {
     <Provider store={store}>
       <div className="d-flex">
         <KanbasNavigation />
-        <div style={{ flexGrow: 1 }}>
+        <div style={{ flexGrow: 1 }} className="container-fluid p-4">
           <Routes>
             <Route path="/" element={<Navigate to="Dashboard" />} />
-            <Route path="Account" element={<h1>Account</h1>} />
+            <Route path="/Account/*" element={<Account />} />
             <Route
-              path="Dashboard"
+              path="/Dashboard"
               element={
                 <Dashboard
                   courses={courses}
@@ -72,7 +73,7 @@ export default function Kanbas() {
                 />
               }
             />
-            <Route path="Courses/:courseId/*" element={<Courses />} />
+            <Route path="/Courses/:courseId/*" element={<Courses />} />
           </Routes>
         </div>
       </div>

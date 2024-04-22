@@ -16,7 +16,7 @@ export default function Dashboard({
   updateCourse: () => void;
 }) {
   return (
-    <div className="p-4">
+    <div>
       <h1>Dashboard</h1>
       <h5>Course</h5>
       <input
@@ -41,8 +41,12 @@ export default function Dashboard({
         type="date"
         onChange={(e) => setCourse({ ...course, endDate: e.target.value })}
       />
-      <button onClick={addNewCourse}>Add</button>
-      <button onClick={updateCourse}>Update</button>
+      <button onClick={addNewCourse} className="btn btn-primary me-2">
+        Add
+      </button>
+      <button onClick={updateCourse} className="btn btn-warning">
+        Update
+      </button>
 
       <hr />
       <h2>Published Courses ({courses.length})</h2>
@@ -63,7 +67,7 @@ export default function Dashboard({
                 >
                   <div style={{ height: 150 }}>
                     <img
-                      src={`/images/${course.image}`}
+                      src={`/images${course.image}`}
                       alt=""
                       className="card-img-top"
                     />
