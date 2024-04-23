@@ -87,74 +87,72 @@ export default function ModuleList() {
             </button>
           </li>
 
-          {moduleList
-            .filter((module) => module.course === courseId)
-            .map((module, index) => (
-              <li key={index} className="list-group-item">
-                <div
-                  style={
-                    selectedModuleId === module._id
-                      ? { marginBottom: "10px" }
-                      : {}
-                  }
-                  onClick={() =>
-                    selectedModuleId === module._id
-                      ? setSelectedModuleId("-1")
-                      : setSelectedModuleId(module._id)
-                  }
-                >
-                  <FaEllipsisV className="me-2" />
-                  {module.name}
+          {moduleList.map((module, index) => (
+            <li key={index} className="list-group-item">
+              <div
+                style={
+                  selectedModuleId === module._id
+                    ? { marginBottom: "10px" }
+                    : {}
+                }
+                onClick={() =>
+                  selectedModuleId === module._id
+                    ? setSelectedModuleId("-1")
+                    : setSelectedModuleId(module._id)
+                }
+              >
+                <FaEllipsisV className="me-2" />
+                {module.name}
 
-                  <span className="float-end">
-                    <button
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        dispatch(setModule(module));
-                      }}
-                      className="btn btn-primary btn-sm"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        handleDeleteModule(module._id);
-                      }}
-                      className="btn btn-danger btn-sm"
-                      style={{ marginLeft: "5px" }}
-                    >
-                      Delete
-                    </button>
-                  </span>
-                </div>
-                {selectedModuleId === module._id && (
-                  <ul className="list-group">
-                    {module.lessons ? (
-                      module.lessons?.map((lesson: any, index: any) => (
-                        <li className="list-group-item" key={index}>
-                          <FaEllipsisV className="me-2" />
-                          {lesson.name}
-                          <span className="float-end">
-                            <FaCheckCircle className="text-success" />
-                            <FaEllipsisV className="ms-2" />
-                          </span>
-                        </li>
-                      ))
-                    ) : (
+                <span className="float-end">
+                  <button
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      dispatch(setModule(module));
+                    }}
+                    className="btn btn-primary btn-sm"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      handleDeleteModule(module._id);
+                    }}
+                    className="btn btn-danger btn-sm"
+                    style={{ marginLeft: "5px" }}
+                  >
+                    Delete
+                  </button>
+                </span>
+              </div>
+              {selectedModuleId === module._id && (
+                <ul className="list-group">
+                  {module.lessons ? (
+                    module.lessons?.map((lesson: any, index: any) => (
                       <li className="list-group-item" key={index}>
                         <FaEllipsisV className="me-2" />
-                        Placeholder Lesson
+                        {lesson.name}
                         <span className="float-end">
                           <FaCheckCircle className="text-success" />
                           <FaEllipsisV className="ms-2" />
                         </span>
                       </li>
-                    )}
-                  </ul>
-                )}
-              </li>
-            ))}
+                    ))
+                  ) : (
+                    <li className="list-group-item" key={index}>
+                      <FaEllipsisV className="me-2" />
+                      Placeholder Lesson
+                      <span className="float-end">
+                        <FaCheckCircle className="text-success" />
+                        <FaEllipsisV className="ms-2" />
+                      </span>
+                    </li>
+                  )}
+                </ul>
+              )}
+            </li>
+          ))}
         </ul>
       </div>
     </>
