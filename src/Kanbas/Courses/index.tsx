@@ -34,7 +34,7 @@ export default function Courses() {
     <div>
       <h1>
         <HiMiniBars3 /> {course?.name}
-        {breadcrumbs.map((crumb) => " > " + crumb)}
+        {breadcrumbs.slice(0, 1).map((crumb) => " > " + crumb)}
       </h1>
       <hr />
       <CourseNavigation />

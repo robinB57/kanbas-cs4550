@@ -21,7 +21,7 @@ export default function ModuleList() {
     client
       .findModulesForCourse(courseId as string)
       .then((modules) => dispatch(setModules(modules)));
-  }, [courseId]);
+  }, [courseId, dispatch]);
 
   const module = useSelector(
     (state: KanbasState) => state.modulesReducer.module

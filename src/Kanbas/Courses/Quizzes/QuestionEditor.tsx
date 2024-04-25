@@ -1,36 +1,26 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { KanbasState } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import MCEditor from "./QuestionEditor/MCEditor";
 import TFEditor from "./QuestionEditor/TFEditor";
 import FillInEditor from "./QuestionEditor/FillInEditor";
-import * as client from "./client";
-import { addQuestion } from "./reducer";
-import { setQuestionList } from "./reducer";
+import { useEffect } from "react";
+import { fetchData } from "./util";
 
 export default function QuestionEditor() {
-  const { questionId } = useParams();
+  const { courseId, quizId, questionId } = useParams();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    fetchData(dispatch, courseId, quizId);
+  }, [courseId, quizId, dispatch]);
 
   const questionList = useSelector(
     (state: KanbasState) => state.quizzesReducer.questionList
   );
-  const questionType = questionList.find(
+  const questionType = questionList?.find(
     (q: any) => q._id === questionId
-  ).questionType;
-
-  function handleAddQuestion() {
-    client.createQuestion(questionId as any).then((newQuestion) => {
-      dispatch(addQuestion(newQuestion));
-    });
-  }
-
-  // i think this one is wrong
-  function saveQuestion() {
-    client.updateQuestion(questionId).then((question) => {
-      dispatch(setQuestionList(question));
-    });
-  }
+  )?.questionType;
 
   function getQuestionEditor() {
     switch (questionType) {

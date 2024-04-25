@@ -1,10 +1,10 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as client from "../client";
 import { TINYMCE_API_KEY } from "../../../../constants";
 import { Editor } from "@tinymce/tinymce-react";
 import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../../store";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { setQuestionList } from "../reducer";
 
 export default function MCEditor() {
@@ -15,7 +15,7 @@ export default function MCEditor() {
     (state: KanbasState) => state.quizzesReducer.questionList
   );
   const [question, setQuestion] = useState(
-    questionList.find((q) => q._id === questionId)
+    questionList?.find((q) => q._id === questionId)
   );
 
   // this is what we call when we hit the save button. as long as the question is up to date we update the client on what happens and then saves it to the server + updates the local state of the question

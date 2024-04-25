@@ -1,22 +1,44 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { KanbasState } from "../../store";
 import { useEffect } from "react";
+import { fetchData } from "./util";
 import * as client from "./client";
-import { setQuiz } from "./reducer";
+import { setQuiz, setQuizList } from "./reducer";
 
 export default function QuizDetails() {
   const dispatch = useDispatch();
-  const { quizId } = useParams();
+  const { courseId, quizId } = useParams();
+  const quizList = useSelector(
+    (state: KanbasState) => state.quizzesReducer.quizList
+  );
   const quiz = useSelector((state: KanbasState) => state.quizzesReducer.quiz);
+  const questionList = useSelector(
+    (state: KanbasState) => state.quizzesReducer.questionList
+  );
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (quiz?._id !== quizId) {
-      client.findQuiz(quizId as string).then((newQuiz) => {
-        dispatch(setQuiz(newQuiz));
-      });
-    }
-  }, [quiz, quizId, dispatch]);
+    fetchData(dispatch, courseId, quizId);
+  }, [courseId, quizId, dispatch]);
+
+  function handlePreview() {
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/preview`);
+  }
+
+  function handleEdit() {
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/edit`);
+  }
+
+  function publishQuiz(isPublished: boolean, quiz: any) {
+    client.updateQuiz({ ...quiz, isPublished }).then((newQuiz) => {
+      dispatch(setQuiz(newQuiz));
+      dispatch(
+        setQuizList(quizList.map((q) => (q._id === quiz._id ? newQuiz : q)))
+      );
+    });
+  }
 
   return (
     <>
@@ -24,34 +46,73 @@ export default function QuizDetails() {
         {quiz ? (
           <tbody>
             <tr>
-              <button>Publish</button>
-              <button>Preview</button>
-              <button>Edit</button>
-              <hr></hr>
-              <h3> {quiz.title} </h3>
-              Quiz Type {quiz.quizType} <br></br>
-              Points {quiz.points} <br></br>
-              Assignment Group {quiz.assignmentGroup} <br></br>
-              Shuffle Answers {quiz.shuffleAnswers} <br></br>
-              Time Limit{quiz.timeLimit} <br></br>
-              Multiple Attempts {quiz.multipleAttempts} <br></br>
-              Show Correct Answers {quiz.showCorrectAnswers} <br></br>
-              One Question at a Time {quiz.oneQuestionAtATime}
-              <br></br>
-              Webcam Required {quiz.webcamRequired}
-              <br></br>
-              Lock Questions After Answering {
-                quiz.lockQuestionsAfterAnswering
-              }{" "}
-              <br></br>
+              <div className="d-flex">
+                {quiz.isPublished ? (
+                  <button
+                    className="btn btn-light"
+                    onClick={() => publishQuiz(false, quiz)}
+                  >
+                    Unpublish
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-success"
+                    onClick={() => publishQuiz(true, quiz)}
+                  >
+                    Publish
+                  </button>
+                )}
+                <button className="btn btn-light" onClick={handlePreview}>
+                  Preview
+                </button>
+                <button className="btn btn-light" onClick={handleEdit}>
+                  Edit
+                </button>
+                <hr></hr>
+              </div>
+              <div className="padded">
+                <h3> {quiz.title} </h3>
+                <p dangerouslySetInnerHTML={{ __html: quiz.description }}></p>
+                <b> Quiz Type: </b> {quiz.quizType} <br></br>
+                <b> Points: </b>
+                {questionList.reduce(
+                  (acc, question) => acc + question.points,
+                  0
+                )}
+                <br></br>
+                <b> Assignment Group: </b> {quiz.assignmentGroup} <br></br>
+                <b> Shuffle Answers: </b> {quiz.shuffleAnswers ? "Yes" : "No"}{" "}
+                <br></br>
+                <b> Time Limit: </b> {quiz.timeLimit + " minutes"} <br></br>
+                <b> Multiple Attempts: </b>{" "}
+                {quiz.multipleAttempts ? "Yes" : "No"} <br></br>
+                <b> Show Correct Answers: </b>{" "}
+                {quiz.showCorrectAnswers ? "Yes" : "No"}
+                <br></br>
+                <b> One Question at a Time: </b>{" "}
+                {quiz.oneQuestionAtATime ? "Yes" : "No"}
+                <br></br>
+                <b> Webcam Required: </b> {quiz.webcamRequired ? "Yes" : "No"}
+                <br></br>
+                <b> Lock Questions After Answering: </b>{" "}
+                {quiz.lockQuestionsAfterAnswering ? "Yes" : "No"} <br></br>
+              </div>
             </tr>
             <tr>
-              <td>Due</td>
-              <td>For</td>
-              <td>Available from</td>
-              <td>Until</td>
+              <td>
+                <b>Due</b>
+              </td>
+              <td>
+                <b>For</b>
+              </td>
+              <td>
+                <b>Available from</b>
+              </td>
+              <td>
+                <b>Until</b>
+              </td>
+              <hr></hr>
             </tr>
-            <hr></hr>
             <tr>
               <td>{quiz.dueDate}</td>
               <td>Everyone</td>

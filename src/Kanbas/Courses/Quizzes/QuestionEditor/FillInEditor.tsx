@@ -15,7 +15,7 @@ export default function FillInEditor() {
     (state: KanbasState) => state.quizzesReducer.questionList
   );
   const [question, setQuestion] = useState(
-    questionList.find((q) => q._id === questionId)
+    questionList?.find((q) => q._id === questionId)
   );
 
   function saveQuestion() {

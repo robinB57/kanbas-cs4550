@@ -1,39 +1,48 @@
 import { useEffect } from "react";
-import { FaCheckCircle, FaEllipsisV, FaPlusCircle } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
+import {
+  FaCheckCircle,
+  FaEllipsisV,
+  FaPlusCircle,
+  FaTimesCircle,
+} from "react-icons/fa";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import * as client from "./client";
 import { addQuiz, setQuizList } from "./reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../store";
+import { Dropdown } from "react-bootstrap";
+import { fetchData } from "./util";
 
 export default function QuizList() {
   const { courseId } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const quizList = useSelector(
     (state: KanbasState) => state.quizzesReducer.quizList
   );
 
   useEffect(() => {
-    client.findAllQuizzes().then((allQuizzes) =>
-      dispatch(
-        setQuizList(
-          allQuizzes.filter((quiz: any) => {
-            return quiz.course === courseId;
-          })
-        )
-      )
-    );
-  }, [courseId]);
+    fetchData(dispatch, courseId);
+  }, [courseId, dispatch]);
 
   function handleAddQuiz() {
     client.createQuiz(courseId as any).then((newQuiz) => {
       dispatch(addQuiz(newQuiz));
+      navigate(`${newQuiz._id}/details`);
     });
   }
 
   function deleteQuiz(quizId: string) {
     client.deleteQuiz(quizId);
-    dispatch(setQuizList(quizList));
+    dispatch(setQuizList(quizList.filter((q) => q._id !== quizId)));
+  }
+
+  function publishQuiz(isPublished: boolean, quiz: any) {
+    client.updateQuiz({ ...quiz, isPublished }).then((newQuiz) => {
+      dispatch(
+        setQuizList(quizList.map((q) => (q._id === quiz._id ? newQuiz : q)))
+      );
+    });
   }
 
   return (
@@ -45,22 +54,9 @@ export default function QuizList() {
               <input placeholder="Search for Quizzes" />
             </td>
             <td>
-              <button onClick={handleAddQuiz}>+ Quiz</button>
-              <button>Details</button>
-              <div
-                className="dropdown-menu"
-                aria-labelledby="dropdownMenuButton"
-              >
-                <a className="dropdown-item" href="#">
-                  Action
-                </a>
-                <a className="dropdown-item" href="#">
-                  Another action
-                </a>
-                <a className="dropdown-item" href="#">
-                  Something else here
-                </a>
-              </div>
+              <button className="btn btn-danger" onClick={handleAddQuiz}>
+                + Quiz
+              </button>
             </td>
           </tr>
         </tbody>
@@ -77,40 +73,49 @@ export default function QuizList() {
           </div>
           <ul className="list-group">
             {quizList.map((quiz: any) => (
-              <li className="list-group-item" key={quiz._id}>
+              <li className="list-group-item align-middle" key={quiz._id}>
                 <FaEllipsisV className="me-2" />
-                <Link to={`${quiz._id}/details`}>{quiz.title}</Link>
-                {quiz.questions.length} Questions
+                <Link to={`${quiz._id}/details`} className="btn btn-link">
+                  {quiz.title}
+                </Link>
+                {"          "}
+                {quiz.questions.length} Questions -
+                {quiz.isPublished ? (
+                  <span>
+                    <FaCheckCircle className="ms-2" />
+                    Published
+                  </span>
+                ) : (
+                  <span>
+                    <FaTimesCircle className="ms-2" />
+                    Not Published
+                  </span>
+                )}
                 <span className="float-end">
-                  <div className="dropdown">
-                    <button
-                      className="btn btn-secondary dropdown-toggle"
-                      type="button"
-                      id="dropdownMenuButton"
-                      data-toggle="dropdown"
-                    >
-                      NOT WORKING MENU
-                    </button>
-                    <div className="dropdown-menu">
-                      <a className="dropdown-item" href="#">
+                  <Dropdown>
+                    <Dropdown.Toggle variant="secondary">
+                      &#x22EE; Actions
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item
+                        onClick={() => navigate(`${quiz._id}/edit`)}
+                      >
                         Edit
-                      </a>
-                      <a className="dropdown-item" href="#">
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => deleteQuiz(quiz._id)}>
                         Delete
-                      </a>
-                      <a className="dropdown-item" href="#">
-                        Publish
-                      </a>
-                    </div>
-                  </div>
-
-                  <Link
-                    to={`/Kanbas/Courses/${courseId}/Quizzes/${quiz._id}/details`}
-                  >
-                    edit
-                  </Link>
-                  <FaCheckCircle className="text-success" />
-                  <FaEllipsisV className="ms-2" />
+                      </Dropdown.Item>
+                      {quiz.isPublished ? (
+                        <Dropdown.Item onClick={() => publishQuiz(false, quiz)}>
+                          Unpublish
+                        </Dropdown.Item>
+                      ) : (
+                        <Dropdown.Item onClick={() => publishQuiz(true, quiz)}>
+                          Publish
+                        </Dropdown.Item>
+                      )}
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </span>
               </li>
             ))}
