@@ -13,6 +13,7 @@ import Assignments from "./Assignments";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { COURSES_API } from "../../constants";
+import Quizzes from "./Quizzes";
 
 export default function Courses() {
   const { courseId } = useParams();
@@ -39,7 +40,7 @@ export default function Courses() {
       <CourseNavigation />
       <div>
         <div
-          className="overflow-y-scroll position-fixed bottom-0 end-0"
+          className="overflow-y-scroll position-fixed bottom-0 end-0 mt-4"
           style={{ left: "320px", top: "70px" }}
         >
           <Routes>
@@ -52,7 +53,7 @@ export default function Courses() {
               element={<h1>Assignment Editor</h1>}
             />
             <Route path="Grades" element={<h1>Grades</h1>} />
-            <Route path="Quizzes" element={<Quizzes />} />
+            <Route path="Quizzes/*" element={<Quizzes />} />
           </Routes>
         </div>
       </div>

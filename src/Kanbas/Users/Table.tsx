@@ -1,20 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as client from "./client";
 import { User } from "./client";
-import {
-  BsCheck,
-  BsCheck2,
-  BsFillCheckCircleFill,
-  BsFloppy,
-  BsPencil,
-  BsPersonPlus,
-  BsPlus,
-  BsPlusCircleFill,
-  BsSave,
-  BsSave2,
-  BsTrash,
-  BsTrash3Fill,
-} from "react-icons/bs";
+import { BsFloppy, BsPencil, BsPersonPlus, BsTrash } from "react-icons/bs";
 
 export default function UserTable() {
   const [users, setUsers] = useState<User[]>([]);

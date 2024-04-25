@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { LabState } from "../../../store";
 
 export default function HelloRedux() {

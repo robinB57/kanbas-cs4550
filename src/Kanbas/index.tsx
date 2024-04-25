@@ -54,7 +54,7 @@ export default function Kanbas() {
 
   return (
     <Provider store={store}>
-      <div className="d-flex">
+      <div className="d-flex w-100 h-100 overflow-hidden">
         <KanbasNavigation />
         <div style={{ flexGrow: 1 }} className="container-fluid p-4">
           <Routes>

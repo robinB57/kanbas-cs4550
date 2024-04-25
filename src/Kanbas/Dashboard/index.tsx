@@ -16,7 +16,7 @@ export default function Dashboard({
   updateCourse: () => void;
 }) {
   return (
-    <div>
+    <div className="h-100 overflow-scroll">
       <h1>Dashboard</h1>
       <h5>Course</h5>
       <input

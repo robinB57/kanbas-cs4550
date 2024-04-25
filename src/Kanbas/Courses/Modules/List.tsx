@@ -15,6 +15,8 @@ import * as client from "./client";
 
 export default function ModuleList() {
   const { courseId } = useParams();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     client
       .findModulesForCourse(courseId as string)
@@ -27,7 +29,6 @@ export default function ModuleList() {
   const moduleList = useSelector(
     (state: KanbasState) => state.modulesReducer.modules
   );
-  const dispatch = useDispatch();
   const [selectedModuleId, setSelectedModuleId] = useState("-1");
 
   const handleAddModule = async () => {
