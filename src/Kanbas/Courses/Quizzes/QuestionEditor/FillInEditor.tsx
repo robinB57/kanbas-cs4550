@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { KanbasState } from "../../../store";
 import { useState } from "react";
 import * as client from "../client";
@@ -9,8 +9,10 @@ import { TINYMCE_API_KEY } from "../../../../constants";
 
 export default function FillInEditor() {
   const { questionId } = useParams();
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { courseId, quizId } = useParams();
+
   const questionList = useSelector(
     (state: KanbasState) => state.quizzesReducer.questionList
   );
@@ -19,12 +21,8 @@ export default function FillInEditor() {
   );
 
   function saveQuestion() {
-    client.updateQuestion(question).then((newQuestion) => {
-      const newQuestions = questionList.map((q) =>
-        q._id === questionId ? newQuestion : q
-      );
-      dispatch(setQuestionList(newQuestions));
-    });
+    client.updateQuestion(question).then((question) => {});
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/edit/questions`);
   }
 
   function resetQuestion() {

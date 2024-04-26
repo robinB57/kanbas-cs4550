@@ -25,13 +25,13 @@ export const deleteQuiz = async (quizId: string) => {
 
 // Question functions
 export const createQuestion = async (quizId: string) => {
-  const response = await axios.post(`${QUIZZES_API}/${quizId}/questions`, {
-    quiz: quizId,
-  });
+  const response = await axios.post(`${QUIZZES_API}/${quizId}/questions`);
   return response.data;
 };
 export const findQuestion = async (quizId: string, questionId: string) => {
-  const response = await axios.get(`${QUIZZES_API}/${quizId}/questions`);
+  const response = await axios.get(
+    `${QUIZZES_API}/${quizId}/questions/${questionId}`
+  );
   return response.data;
 };
 export const findQuestionsForQuiz = async (quizId: string) => {
@@ -42,7 +42,9 @@ export const updateQuestion = async (question: any) => {
   const response = await axios.put(`${QUIZZES_API}/${question._id}`, question);
   return response.data;
 };
-export const deleteQuestion = async (questionId: string) => {
-  const response = await axios.delete(`${QUIZZES_API}/${questionId}`);
+export const deleteQuestion = async (quizId: string, questionId: string) => {
+  const response = await axios.delete(
+    `${QUIZZES_API}/${quizId}/questions/${questionId}`
+  );
   return response.data;
 };

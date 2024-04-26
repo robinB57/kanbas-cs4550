@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as client from "../client";
 import { TINYMCE_API_KEY } from "../../../../constants";
 import { Editor } from "@tinymce/tinymce-react";
@@ -9,8 +9,10 @@ import { setQuestionList } from "../reducer";
 
 export default function TFEditor() {
   const { questionId } = useParams();
+  const { courseId, quizId } = useParams();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const questionList = useSelector(
     (state: KanbasState) => state.quizzesReducer.questionList
   );
@@ -26,6 +28,7 @@ export default function TFEditor() {
       );
       dispatch(setQuestionList(newQuestions));
     });
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/edit/questions`);
   }
 
   function resetQuestion() {

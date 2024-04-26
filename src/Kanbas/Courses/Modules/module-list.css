@@ -23,6 +23,6 @@
 .wd-modules > li > ul > li,
 .wd-modules > li > ul > ul > li {
   padding: 5px;
-  border-top: 1px solid gray !important;
+  border-top: 1px solid rgb(202, 200, 200) !important;
   border-left: 2px solid green;
 }

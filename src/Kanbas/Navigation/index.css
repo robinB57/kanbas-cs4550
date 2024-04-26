@@ -1,5 +1,6 @@
 .wd-kanbas-navigation {
-  background-color: black;
+  background-color: rgb(20, 20, 20);
+  color: rgb(60, 60, 60);
   list-style: none;
   padding: 0px;
   margin: 0px;
@@ -24,7 +25,7 @@
   text-decoration: none;
 }
 .wd-kanbas-navigation a svg {
-  color: red;
+  color: rgb(213, 0, 0);
   font-size: 2em;
   margin-bottom: 5px;
 }

@@ -11,7 +11,8 @@ import { addQuiz, setQuizList } from "./reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../store";
 import { Dropdown } from "react-bootstrap";
-import { fetchData } from "./util";
+import { fetchQuizzes } from "./clientUtil";
+import { formatDate } from "./util";
 
 export default function QuizList() {
   const { courseId } = useParams();
@@ -22,7 +23,7 @@ export default function QuizList() {
   );
 
   useEffect(() => {
-    fetchData(dispatch, courseId);
+    fetchQuizzes(dispatch, courseId as string);
   }, [courseId, dispatch]);
 
   function handleAddQuiz() {
@@ -43,6 +44,19 @@ export default function QuizList() {
         setQuizList(quizList.map((q) => (q._id === quiz._id ? newQuiz : q)))
       );
     });
+  }
+
+  function dateInfo(quiz: any) {
+    const availableDate = new Date(quiz.availableDate);
+    const untilDate = new Date(quiz.untilDate);
+    const today = new Date();
+    if (today < availableDate) {
+      return `Not available until ${availableDate.toDateString()}`;
+    } else if (today < untilDate) {
+      return `Available until ${availableDate.toDateString()}`;
+    } else {
+      return "Closed";
+    }
   }
 
   return (
@@ -73,25 +87,42 @@ export default function QuizList() {
           </div>
           <ul className="list-group">
             {quizList.map((quiz: any) => (
-              <li className="list-group-item align-middle" key={quiz._id}>
-                <FaEllipsisV className="me-2" />
-                <Link to={`${quiz._id}/details`} className="btn btn-link">
-                  {quiz.title}
-                </Link>
-                {"          "}
-                {quiz.questions.length} Questions -
-                {quiz.isPublished ? (
-                  <span>
-                    <FaCheckCircle className="ms-2" />
-                    Published
+              <li
+                className="list-group-item align-middle d-inline-flex justify-content-between"
+                key={quiz._id}
+              >
+                <span>
+                  <FaEllipsisV className="me-2" />
+                  <Link
+                    to={`${quiz._id}/details`}
+                    className="btn btn-link py-0"
+                  >
+                    {quiz.title}
+                  </Link>
+                  {quiz.questions.length + " Questions"}
+                  {quiz.isPublished ? (
+                    <span>
+                      <FaCheckCircle className="ms-2 me-1" />
+                      Published
+                    </span>
+                  ) : (
+                    <span>
+                      <FaTimesCircle className="ms-2 me-1" />
+                      Not Published
+                    </span>
+                  )}
+                  <br />
+                  <span className="d-flex flex-row">
+                    <p>{dateInfo(quiz)}</p>
+                    {quiz.dueDate ? <p className="ms-3 me-3">|</p> : ""}
+                    {quiz.dueDate ? (
+                      <p>{`Due ${formatDate(quiz.dueDate)}`}</p>
+                    ) : (
+                      ""
+                    )}
                   </span>
-                ) : (
-                  <span>
-                    <FaTimesCircle className="ms-2" />
-                    Not Published
-                  </span>
-                )}
-                <span className="float-end">
+                </span>
+                <span>
                   <Dropdown>
                     <Dropdown.Toggle variant="secondary">
                       &#x22EE; Actions

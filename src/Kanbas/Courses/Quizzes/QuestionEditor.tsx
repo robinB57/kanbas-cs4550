@@ -5,14 +5,14 @@ import MCEditor from "./QuestionEditor/MCEditor";
 import TFEditor from "./QuestionEditor/TFEditor";
 import FillInEditor from "./QuestionEditor/FillInEditor";
 import { useEffect } from "react";
-import { fetchData } from "./util";
+import { fetchDataIfNeeded } from "./clientUtil";
 
 export default function QuestionEditor() {
   const { courseId, quizId, questionId } = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchData(dispatch, courseId, quizId);
+    fetchDataIfNeeded(dispatch, courseId, quizId);
   }, [courseId, quizId, dispatch]);
 
   const questionList = useSelector(

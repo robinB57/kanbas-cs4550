@@ -11,15 +11,20 @@ body {
   width: 100vw;
   margin: 0;
   padding: 0;
+  color: rgb(60, 60, 60);
 }
 
 .padded {
-  padding-top: 30px;
   padding-bottom: 30px;
 }
 
 .quizpreview-questions {
+  padding-right: 50px;
   display: flex;
   justify-content: right;
-  align-items: top;
+}
+
+.qpreview {
+  width: 100%;
+  padding: 10;
 }

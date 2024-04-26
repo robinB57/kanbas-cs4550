@@ -2,9 +2,11 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { KanbasState } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import * as client from "./client";
-import { addQuestion } from "./reducer";
+import { addQuestion, deleteQuestion } from "./reducer";
 import { useEffect } from "react";
-import { fetchData } from "./util";
+import { fetchDataIfNeeded } from "./clientUtil";
+import { BsTrash } from "react-icons/bs";
+import { Button } from "react-bootstrap";
 
 export default function QuestionList() {
   const { courseId, quizId } = useParams();
@@ -12,7 +14,7 @@ export default function QuestionList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchData(dispatch, courseId, quizId);
+    fetchDataIfNeeded(dispatch, courseId, quizId);
   }, [courseId, quizId, dispatch]);
 
   const questionList = useSelector(
@@ -22,6 +24,15 @@ export default function QuestionList() {
   function handleAddQuestion() {
     client.createQuestion(quizId as any).then((newQuestion) => {
       dispatch(addQuestion(newQuestion));
+      navigate(
+        `/Kanbas/Courses/${courseId}/Quizzes/${quizId}/edit/questions/${newQuestion._id}`
+      );
+    });
+  }
+
+  function handleDeleteQuestion(questionId: any) {
+    client.deleteQuestion(quizId as string, questionId).then(() => {
+      dispatch(deleteQuestion(questionId));
     });
   }
 
@@ -41,7 +52,14 @@ export default function QuestionList() {
           {questionList.map((question: any) => (
             <li className="list-group-item">
               <Link to={`${question._id}`}>{question.title}</Link>
-              <span className="float-end"></span>
+              <span className="float-end">
+                <Button
+                  onClick={() => handleDeleteQuestion(question._id)}
+                  className="btn-danger"
+                >
+                  <BsTrash />
+                </Button>
+              </span>
             </li>
           ))}
         </ul>

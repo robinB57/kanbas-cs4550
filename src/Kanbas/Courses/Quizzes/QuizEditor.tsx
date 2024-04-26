@@ -6,7 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../store";
 import * as client from "./client";
 import { setQuiz } from "./reducer";
-import { fetchData } from "./util";
+import {
+  fetchDataIfNeeded,
+  fetchEverything,
+  fetchQuizAndQuestions,
+} from "./clientUtil";
 
 export default function QuizEditor() {
   const { courseId, quizId } = useParams();
@@ -14,20 +18,21 @@ export default function QuizEditor() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchData(dispatch, courseId, quizId);
+    fetchDataIfNeeded(dispatch, courseId, quizId);
   }, [courseId, quizId, dispatch]);
 
   const quiz = useSelector((state: KanbasState) => state.quizzesReducer.quiz);
 
   function saveQuiz() {
     client.updateQuiz(quiz).then((quiz) => {
+      fetchEverything(dispatch, courseId as string, quizId as string);
       navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/details`);
     });
   }
 
   function publishQuiz() {
-    console.log(quiz);
     client.updateQuiz({ ...quiz, isPublished: true }).then((quiz) => {
+      fetchEverything(dispatch, courseId as string, quizId as string);
       navigate(`/Kanbas/Courses/${courseId}/Quizzes`);
     });
   }
@@ -46,7 +51,7 @@ export default function QuizEditor() {
         <tbody>
           <tr></tr>
           <div>
-            <button className="btn btn-danger">Details</button>
+            <button className="btn btn-dark me-2">Details</button>
             <button className="btn btn-light" onClick={navigateToQuestions}>
               Questions
             </button>
@@ -195,7 +200,7 @@ export default function QuizEditor() {
                 value={quiz?.dueDate}
                 type="Date"
                 onChange={(e) =>
-                  dispatch(setQuiz({ ...quiz, dueDate: e.target.checked }))
+                  dispatch(setQuiz({ ...quiz, dueDate: e.target.value }))
                 }
               />
               Due Date
@@ -203,26 +208,24 @@ export default function QuizEditor() {
             <br></br>
             <label>
               <input
-                value={quiz?.untilDate}
+                value={quiz?.availableDate}
                 type="Date"
                 onChange={(e) =>
-                  dispatch(setQuiz({ ...quiz, untilDate: e.target.checked }))
+                  dispatch(setQuiz({ ...quiz, availableDate: e.target.value }))
                 }
               />
-              Until Date
+              Available Date
             </label>
             <br></br>
             <label>
               <input
-                value={quiz?.availableDate}
+                value={quiz?.untilDate}
                 type="Date"
                 onChange={(e) =>
-                  dispatch(
-                    setQuiz({ ...quiz, availableDate: e.target.checked })
-                  )
+                  dispatch(setQuiz({ ...quiz, untilDate: e.target.value }))
                 }
               />
-              Available Date
+              Until Date
             </label>
             <br></br>
           </div>
