@@ -1,34 +1,75 @@
-import { useParams } from "react-router-dom";
-import * as client from "../client";
-import { TINYMCE_API_KEY } from "../../../../constants";
-import { Editor } from "@tinymce/tinymce-react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { KanbasState } from "../../../store";
-import { useState } from "react";
-import { setQuestionList } from "../reducer";
+import { useEffect, useState } from "react";
 
-export default function MCQuestion() {
-  const { questionId } = useParams();
-  const dispatch = useDispatch();
-  const questionList = useSelector(
-    (state: KanbasState) => state.quizzesReducer.questionList
-  );
-  const [question, setQuestion] = useState(
-    questionList?.find((q) => q._id === questionId)
-  );
+let score = 0;
+export default function MCQuestion(props: {
+  question: any;
+  setScore: any;
+  submitted: boolean;
+}) {
+  const { question, setScore, submitted } = props;
+  const [userAnswer, setUserAnswer] = useState("" as any);
+  const quiz = useSelector((state: KanbasState) => state.quizzesReducer.quiz);
+
+  useEffect(() => {
+    function isAnswered() {
+      return userAnswer !== "";
+    }
+
+    function calculateScore() {
+      score =
+        userAnswer * 1 ===
+        question.multipleChoiceAnswers.find((a: any) => a.isCorrect).order
+          ? question.points
+          : 0;
+    }
+    if (isAnswered()) {
+      calculateScore();
+      setScore(score);
+    } else {
+      setScore(-1);
+    }
+  }, [question, userAnswer, setScore]);
 
   return (
     <>
-      {question.title} : {question.points} Points <hr></hr>
-      {question.text}
+      <h4>
+        <b>{question.title}:</b>{" "}
+        {submitted
+          ? `${Math.round(score * 100) / 100} / ${question.points} Points`
+          : `${question.points} Points`}
+      </h4>
+      <hr />
+      <p dangerouslySetInnerHTML={{ __html: question.text }}></p>
       Answers:
       <ul className="list-group">
-        {question.multipleChoiceAnswers
-          .sort((question: any) => question.order)
-          .map((answer: any, index: number) => (
-            <li className="list-group-item">{answer.answerText}</li>
+        {Array.from(question.multipleChoiceAnswers)
+          .sort((a: any, b: any) => a.order - b.order)
+          .map((answer: any) => (
+            <li className="list-group-item" key={answer.order}>
+              <input
+                type="radio"
+                name={question._id}
+                id={answer.order}
+                value={answer.order}
+                onChange={(e) => setUserAnswer(e.target.value)}
+                defaultChecked={userAnswer === answer.order ? true : undefined}
+                disabled={submitted ? true : undefined}
+                className="me-2"
+              />
+              <label htmlFor={answer.order}>{answer.answerText}</label>
+            </li>
           ))}
       </ul>
+      <b>
+        {submitted && quiz.showCorrectAnswers
+          ? `Correct answer: ${
+              question.multipleChoiceAnswers.find((a: any) => a.isCorrect)
+                .answerText
+            }`
+          : ""}
+      </b>
     </>
   );
 }

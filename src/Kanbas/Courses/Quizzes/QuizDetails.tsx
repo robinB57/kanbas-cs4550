@@ -89,13 +89,16 @@ export default function QuizDetails() {
               <b> Show Correct Answers: </b>{" "}
               {quiz.showCorrectAnswers ? "Yes" : "No"}
               <br></br>
+              <b> Access Code: </b> {quiz.accessCode ? quiz.accessCode : "None"}
+              <br></br>
               <b> One Question at a Time: </b>{" "}
               {quiz.oneQuestionAtATime ? "Yes" : "No"}
               <br></br>
               <b> Webcam Required: </b> {quiz.webcamRequired ? "Yes" : "No"}
               <br></br>
               <b> Lock Questions After Answering: </b>{" "}
-              {quiz.lockQuestionsAfterAnswering ? "Yes" : "No"} <br></br>
+              {quiz.lockQuestionsAfterAnswering ? "Yes" : "No"}
+              <br></br>
             </div>
             <table style={{ tableLayout: "fixed", width: "800px" }}>
               <tbody>

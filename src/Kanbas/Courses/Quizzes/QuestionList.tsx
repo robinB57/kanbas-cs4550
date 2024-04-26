@@ -46,11 +46,11 @@ export default function QuestionList() {
         <button className="btn btn-light" onClick={navigateToDetails}>
           Details
         </button>
-        <button className="btn btn-danger">Questions</button>
+        <button className="btn btn-dark">Questions</button>
         <hr></hr>
         <ul className="list-group">
           {questionList.map((question: any) => (
-            <li className="list-group-item">
+            <li className="list-group-item" key={question._id}>
               <Link to={`${question._id}`}>{question.title}</Link>
               <span className="float-end">
                 <Button
@@ -65,8 +65,7 @@ export default function QuestionList() {
         </ul>
       </div>
       <div>
-        <button className="btn btn-danger" onClick={handleAddQuestion}>
-          {" "}
+        <button className="btn btn-primary mt-2" onClick={handleAddQuestion}>
           + Question
         </button>
       </div>

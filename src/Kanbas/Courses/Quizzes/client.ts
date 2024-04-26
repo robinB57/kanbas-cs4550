@@ -38,8 +38,11 @@ export const findQuestionsForQuiz = async (quizId: string) => {
   const response = await axios.get(`${QUIZZES_API}/${quizId}/questions`);
   return response.data;
 };
-export const updateQuestion = async (question: any) => {
-  const response = await axios.put(`${QUIZZES_API}/${question._id}`, question);
+export const updateQuestion = async (quizId: string, question: any) => {
+  const response = await axios.put(
+    `${QUIZZES_API}/${quizId}/questions/${question._id}`,
+    question
+  );
   return response.data;
 };
 export const deleteQuestion = async (quizId: string, questionId: string) => {

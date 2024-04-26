@@ -1,36 +1,82 @@
-import { useParams } from "react-router-dom";
-import * as client from "../client";
-import { TINYMCE_API_KEY } from "../../../../constants";
-import { Editor } from "@tinymce/tinymce-react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { KanbasState } from "../../../store";
-import { useState } from "react";
-import { setQuestionList } from "../reducer";
+import { useEffect, useState } from "react";
 
-export default function TFQuestion() {
-  const { questionId } = useParams();
+let score = 0;
+export default function TFQuestion(props: {
+  question: any;
+  setScore: any;
+  submitted: boolean;
+}) {
+  const { question, setScore, submitted } = props;
+  const [userAnswer, setUserAnswer] = useState("");
+  const quiz = useSelector((state: KanbasState) => state.quizzesReducer.quiz);
 
-  const dispatch = useDispatch();
-  const questionList = useSelector(
-    (state: KanbasState) => state.quizzesReducer.questionList
-  );
-  const [question, setQuestion] = useState(
-    questionList?.find((q) => q._id === questionId)
-  );
+  useEffect(() => {
+    function isAnswered() {
+      return userAnswer !== "";
+    }
+    function calculateScore() {
+      score = userAnswer === question.trueOrFalseAnswer ? question.points : 0;
+    }
+    if (isAnswered()) {
+      calculateScore();
+      setScore(score);
+    } else {
+      setScore(-1);
+    }
+  }, [question, userAnswer, setScore]);
 
   return (
     <>
-      {question.title} : {question.points} Points <hr></hr>
-      {question.text}
+      <h4>
+        <b>{question.title}:</b>{" "}
+        {submitted
+          ? `${Math.round(score * 100) / 100} / ${question.points} Points`
+          : `${question.points} Points`}
+      </h4>
+      <hr />
+      <p dangerouslySetInnerHTML={{ __html: question.text }}></p>
       Answers:
-      <label>
-        <input value={question.trueOrFalseAnswer} type="checkbox" />
-        True
-      </label>
-      <label>
-        <input value={question.trueOrFalseAnswer} type="checkbox" />
-        False
-      </label>
+      <ul className="list-group">
+        <li className="list-group-item">
+          <label>
+            <input
+              type="radio"
+              name={question._id}
+              id="TRUE"
+              value="TRUE"
+              onChange={(e) => setUserAnswer("TRUE")}
+              defaultChecked={userAnswer === "TRUE" ? true : undefined}
+              disabled={submitted ? true : undefined}
+              className="me-2"
+            />
+            True
+          </label>
+        </li>
+        <li className="list-group-item">
+          <label>
+            <input
+              type="radio"
+              name={question._id}
+              id="FALSE"
+              value="FALSE"
+              onChange={(e) => setUserAnswer("FALSE")}
+              defaultChecked={userAnswer === "FALSE" ? true : undefined}
+              disabled={submitted ? true : undefined}
+              className="me-2"
+            />
+            False
+          </label>
+        </li>
+      </ul>
+      <b>
+        {submitted && quiz.showCorrectAnswers
+          ? `Correct answer: ${
+              question.trueOrFalseAnswer === "TRUE" ? "True" : "False"
+            }`
+          : ""}
+      </b>
     </>
   );
 }

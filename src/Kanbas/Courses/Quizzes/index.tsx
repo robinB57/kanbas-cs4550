@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
-import QuizPreview from "./QuizPreview";
-import QuestionEditor from "./QuestionEditor";
+import QuizPreview from "./QuizPreview/QuizPreview";
+import QuestionEditor from "./QuestionEditor/QuestionEditor";
 
 import QuizList from "./QuizList";
 import QuizEditor from "./QuizEditor";

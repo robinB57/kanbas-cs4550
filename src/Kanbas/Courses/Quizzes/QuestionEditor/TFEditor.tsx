@@ -8,11 +8,10 @@ import { useState } from "react";
 import { setQuestionList } from "../reducer";
 
 export default function TFEditor() {
-  const { questionId } = useParams();
-  const { courseId, quizId } = useParams();
-
+  const { questionId, courseId, quizId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const questionList = useSelector(
     (state: KanbasState) => state.quizzesReducer.questionList
   );
@@ -20,9 +19,8 @@ export default function TFEditor() {
     questionList?.find((q) => q._id === questionId)
   );
 
-  // this is what we call when we hit the save button. as long as the question is up to date we update the client on what happens and then saves it to the server + updates the local state of the question
   function saveQuestion() {
-    client.updateQuestion(question).then((newQuestion) => {
+    client.updateQuestion(quizId as string, question).then((newQuestion) => {
       const newQuestions = questionList.map((q) =>
         q._id === questionId ? newQuestion : q
       );
@@ -33,16 +31,20 @@ export default function TFEditor() {
 
   function resetQuestion() {
     setQuestion(questionList.find((q) => q._id === questionId));
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/edit/questions`);
   }
 
   return (
     <>
+      Title:
       <input
         onChange={(e) => setQuestion({ ...question, title: e.target.value })}
         value={question.title}
         type="text"
+        className="ms-2"
       />
-      pts:
+      <br />
+      Points:
       <input
         onChange={(e) =>
           setQuestion({
@@ -51,8 +53,10 @@ export default function TFEditor() {
           })
         }
         value={question.points}
-        type="text"
+        type="number"
+        className="ms-2"
       />
+      <br /> <br />
       Question:
       <Editor
         apiKey={TINYMCE_API_KEY}
@@ -61,35 +65,60 @@ export default function TFEditor() {
           setQuestion({ ...question, text: newText });
         }}
       />
-      Answers:
-      <label>
-        <input
-          value={question.trueOrFalseAnswer}
-          type="checkbox"
-          onChange={(e) =>
-            setQuestion({
-              ...question,
-              trueOrFalseAnswer: "TRUE",
-            })
-          }
-        />
-        True
-      </label>
-      <label>
-        <input
-          value={question.trueOrFalseAnswer}
-          type="checkbox"
-          onChange={(e) =>
-            setQuestion({
-              ...question,
-              trueOrFalseAnswer: "FALSE",
-            })
-          }
-        />
-        False
-      </label>
-      <button onClick={resetQuestion}>Cancel</button>
-      <button onClick={saveQuestion}>Save</button>
+      <br />
+      Answer:
+      <br />
+      <ul className="list-group">
+        <li className="list-group-item">
+          <label>
+            <input
+              type="radio"
+              name="correctAnswer"
+              id="TRUE"
+              value="TRUE"
+              onClick={(e) =>
+                setQuestion({
+                  ...question,
+                  trueOrFalseAnswer: "TRUE",
+                })
+              }
+              defaultChecked={
+                question.trueOrFalseAnswer === "TRUE" ? true : undefined
+              }
+              className="me-2"
+            />
+            True
+          </label>
+        </li>
+        <li className="list-group-item">
+          <label>
+            <input
+              type="radio"
+              name="correctAnswer"
+              id="FALSE"
+              value="FALSE"
+              onClick={(e) =>
+                setQuestion({
+                  ...question,
+                  trueOrFalseAnswer: "FALSE",
+                })
+              }
+              defaultChecked={
+                question.trueOrFalseAnswer === "FALSE" ? true : undefined
+              }
+              className="me-2"
+            />
+            False
+          </label>
+        </li>
+      </ul>
+      <br /> <br />
+      <button className="btn btn-danger" onClick={resetQuestion}>
+        Cancel
+      </button>
+      <button className="btn btn-success" onClick={saveQuestion}>
+        Save
+      </button>
     </>
   );
 }

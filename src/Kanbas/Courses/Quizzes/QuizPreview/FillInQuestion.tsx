@@ -1,31 +1,78 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useSelector } from "react-redux";
 import { KanbasState } from "../../../store";
-import { useState } from "react";
-import * as client from "../client";
-import { setQuestionList } from "../reducer";
-import { Editor } from "@tinymce/tinymce-react";
-import { TINYMCE_API_KEY } from "../../../../constants";
+import { useEffect, useState } from "react";
 
-export default function FillInQuestion() {
-  const { questionId } = useParams();
+let score = 0;
+export default function FillInQuestion(props: {
+  question: any;
+  setScore: any;
+  submitted: boolean;
+}) {
+  const { question, setScore, submitted } = props;
+  const [userAnswers, setUserAnswers] = useState(
+    new Array(question.fillInBlanksAnswers.length).fill("")
+  );
+  const quiz = useSelector((state: KanbasState) => state.quizzesReducer.quiz);
 
-  const dispatch = useDispatch();
-  const questionList = useSelector(
-    (state: KanbasState) => state.quizzesReducer.questionList
-  );
-  const [question, setQuestion] = useState(
-    questionList?.find((q) => q._id === questionId)
-  );
+  useEffect(() => {
+    function isAnswered() {
+      return userAnswers.reduce((acc, curr) => acc || curr !== "", false);
+    }
+    function calculateScore() {
+      const correct = [];
+      for (let i = 0; i < userAnswers.length; i++) {
+        correct.push(
+          question?.fillInBlanksAnswers[i]?.correctAnswer.toUpperCase() ===
+            userAnswers[i]?.toUpperCase()
+        );
+      }
+      return (
+        (correct.reduce((acc, val) => acc + (val ? 1 : 0), 0) *
+          question.points) /
+        userAnswers.length
+      );
+    }
+    if (isAnswered()) {
+      setScore(calculateScore());
+    } else {
+      setScore(-1);
+    }
+  }, [question, userAnswers, setScore]);
+
   return (
     <>
+      <h4>
+        <b>{question.title}:</b>{" "}
+        {submitted
+          ? `${Math.round(score * 100) / 100} / ${question.points} Points`
+          : `${question.points} Points`}
+      </h4>
+      <hr />
+      <p dangerouslySetInnerHTML={{ __html: question.text }}></p>
       Answers:
       <ul className="list-group">
-        {question.fillInBlanksAnswers
-          .sort((question: any) => question.order)
+        {Array.from(question.fillInBlanksAnswers)
+          .sort((a: any, b: any) => a.order - b.order)
           .map((answer: any, index: number) => (
-            <li className="list-group-item">
-              <input value={question.title} type="text" />
+            <li className="list-group-item" key={answer.order}>
+              <input
+                value={userAnswers[index]}
+                onChange={(e) =>
+                  setUserAnswers(
+                    userAnswers.map((a, idx) =>
+                      idx === index ? e.target.value : a
+                    )
+                  )
+                }
+                type="text"
+                disabled={submitted ? true : undefined}
+                className="me-2"
+              />
+              <b>
+                {submitted && quiz.showCorrectAnswers
+                  ? `Correct answer: ${question.fillInBlanksAnswers[index].correctAnswer}`
+                  : ""}
+              </b>
             </li>
           ))}
       </ul>
